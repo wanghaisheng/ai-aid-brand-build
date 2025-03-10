@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title data-i18n="app.home.title">一个人的商学院 - 首页</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFA500;
+            --secondary-color: #007bff;
+            --background-color: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F5F5F5;
+            color: var(--text-color);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 模拟 iOS 状态栏 */
+        .ios-status-bar {
+            background-color: #000;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            padding: 0 15px;
+        }
+        
+        /* 模拟 iOS Tab Bar */
+        .ios-tab-bar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #E5E5E5;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 83px;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+            padding-bottom: 30px;
+        }
+        
+        /* 内容区域 */
+        .app-content {
+            margin-top: 40px;
+            margin-bottom: 83px;
+            border-radius: 0;
+            overflow-y: auto;
+            height: calc(100vh - 123px);
+        }
+        
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-pill {
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8E8E93;
+            font-size: 10px;
+            padding-top: 8px;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-item i {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        /* 轮播样式 */
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .carousel::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+        
+        .carousel-item {
+            flex: 0 0 auto;
+            width: 85%;
+            scroll-snap-align: center;
+            margin-right: 15px;
+        }
+        
+        /* 头像样式 */
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 设备外壳样式 */
+        .device-frame {
+            background-color: #000;
+            border-radius: 22px;
+            padding: 0;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            max-width: 375px;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="device-frame">
+        <!-- iOS 状态栏 -->
+        <div class="ios-status-bar flex justify-between items-center">
+            <div class="text-white text-xs">9:41</div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-signal text-white text-xs"></i>
+                <i class="fas fa-wifi text-white text-xs"></i>
+                <i class="fas fa-battery-full text-white text-xs"></i>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="app-content bg-gray-50">
+            <!-- 顶部 -->
+            <div class="bg-white px-5 pt-5 pb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h1 class="text-2xl font-bold" data-i18n="app.home.greeting">你好，创业者</h1>
+                        <p class="text-gray-500 text-sm" data-i18n="app.home.welcomeBack">欢迎回来！</p>
+                    </div>
+                    <div class="flex items-center">
+                        <button class="mr-4 text-gray-500">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-1 right-1 bg-red-500 rounded-full w-2 h-2"></span>
+                        </button>
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="用户头像" class="avatar">
+                    </div>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div class="relative mb-2">
+                    <input type="text" class="w-full bg-gray-100 rounded-full py-3 px-5 pr-10 text-sm" data-i18n-placeholder="app.home.searchPlaceholder" placeholder="搜索课程、资源和导师...">
+                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <!-- 轮播广告 -->
+            <div class="px-5 py-4">
+                <div class="carousel">
+                    <div class="carousel-item">
+                        <div class="card bg-gradient-to-r from-orange-400 to-orange-600 text-white p-5">
+                            <div class="flex justify-between items-start">
+                                <div class="w-3/5">
+                                    <span class="inline-block bg-white bg-opacity-30 rounded-full px-3 py-1 text-xs mb-3" data-i18n="app.home.carousel1.tag">热门活动</span>
+                                    <h3 class="text-lg font-bold mb-2 leading-tight" data-i18n="app.home.carousel1.title">创业者沙龙</h3>
+                                    <p class="text-sm mb-3" data-i18n="app.home.carousel1.description">与成功创业者面对面交流，碰撞思想火花</p>
+                                    <button class="bg-white text-orange-500 rounded-full text-xs px-4 py-2 font-medium" data-i18n="app.home.carousel1.button">立即报名</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="活动图片" class="w-24 h-24 rounded-xl object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="card bg-gradient-to-r from-blue-400 to-blue-600 text-white p-5">
+                            <div class="flex justify-between items-start">
+                                <div class="w-3/5">
+                                    <span class="inline-block bg-white bg-opacity-30 rounded-full px-3 py-1 text-xs mb-3" data-i18n="app.home.carousel2.tag">新课上线</span>
+                                    <h3 class="text-lg font-bold mb-2 leading-tight" data-i18n="app.home.carousel2.title">辟谷代餐品牌运营实战</h3>
+                                    <p class="text-sm mb-3" data-i18n="app.home.carousel2.description">从0到1打造爆款健康食品品牌</p>
+                                    <button class="bg-white text-blue-500 rounded-full text-xs px-4 py-2 font-medium" data-i18n="app.home.carousel2.button">立即学习</button>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1553787762-b5f5721f3b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="课程图片" class="w-24 h-24 rounded-xl object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 我的进度 -->
+            <div class="px-5 py-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold" data-i18n="app.home.myProgress">我的学习进度</h2>
+                    <a href="#" class="text-orange-500 text-sm" data-i18n="app.home.viewAll">查看全部</a>
+                </div>
+                
+                <div class="card bg-white p-4 mb-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center">
+                            <div class="bg-orange-100 text-orange-500 p-3 rounded-lg mr-3">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-sm" data-i18n="app.home.course1.title">创业思维培养</h3>
+                                <p class="text-gray-500 text-xs" data-i18n="app.home.course1.lessons">12课时 · 已学习8课时</p>
+                            </div>
+                        </div>
+                        <span class="text-orange-500 font-medium">67%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-orange-500 h-2 rounded-full" style="width: 67%"></div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 text-blue-500 p-3 rounded-lg mr-3">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-sm" data-i18n="app.home.course2.title">健康食品市场分析</h3>
+                                <p class="text-gray-500 text-xs" data-i18n="app.home.course2.lessons">10课时 · 已学习3课时</p>
+                            </div>
+                        </div>
+                        <span class="text-blue-500 font-medium">30%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 30%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 推荐课程 -->
+            <div class="px-5 py-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold" data-i18n="app.home.recommendedCourses">推荐课程</h2>
+                    <a href="#" class="text-orange-500 text-sm" data-i18n="app.home.viewAll">查看全部</a>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="card bg-white overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1579389083046-e3df9c2b3325?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="课程图片" class="w-full h-32 object-cover">
+                        <div class="p-3">
+                            <span class="inline-block bg-orange-100 text-orange-500 category-pill mb-2" data-i18n="app.home.recommendedCourse1.category">品牌建设</span>
+                            <h3 class="font-medium text-sm mb-1 line-clamp-2" data-i18n="app.home.recommendedCourse1.title">从0到1打造爆款品牌</h3>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-user-tie mr-1"></i>
+                                <span data-i18n="app.home.recommendedCourse1.instructor">张教授</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-white overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="课程图片" class="w-full h-32 object-cover">
+                        <div class="p-3">
+                            <span class="inline-block bg-blue-100 text-blue-500 category-pill mb-2" data-i18n="app.home.recommendedCourse2.category">营销策略</span>
+                            <h3 class="font-medium text-sm mb-1 line-clamp-2" data-i18n="app.home.recommendedCourse2.title">小红书营销实战指南</h3>
+                            <div class="flex items-center text-xs text-gray-500">
+                                <i class="fas fa-user-tie mr-1"></i>
+                                <span data-i18n="app.home.recommendedCourse2.instructor">李导师</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 品牌专区 -->
+            <div class="px-5 py-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold" data-i18n="app.home.brand.title">品牌专区</h2>
+                    <a href="brand.html" class="text-orange-500 text-sm flex items-center">
+                        <span data-i18n="app.home.brand.viewMore">了解更多</span>
+                        <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                    </a>
+                </div>
+                
+                <div class="card bg-white overflow-hidden">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1557682250-6b896c5bc495?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="品牌背景" class="w-full h-32 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-60"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                            <h3 class="text-lg font-bold mb-1" data-i18n="app.brand.name">一个人的商学院</h3>
+                            <p class="text-sm opacity-90" data-i18n="app.brand.slogan">通过辟谷代餐品牌实践，分享创业经验，助力个人创业</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="bg-orange-100 text-orange-500 p-3 rounded-lg mr-3">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div>
+                                    <span class="text-sm font-medium" data-i18n="app.home.brand.innovativeModel">创新商业模式</span>
+                                    <p class="text-xs text-gray-500" data-i18n="app.home.brand.aiPowered">AI赋能个人创业</p>
+                                </div>
+                            </div>
+                            <button onclick="window.location.href='brand.html'" class="bg-orange-500 text-white text-sm px-4 py-2 rounded-full hover:bg-orange-600 transition-colors">
+                                <span data-i18n="app.home.brand.explore">探索品牌</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 精选产品 -->
+            <div class="px-5 py-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold" data-i18n="app.home.products.title">精选产品</h2>
+                    <a href="products.html" class="text-orange-500 text-sm flex items-center">
+                        <span data-i18n="app.home.products.viewMore">查看更多</span>
+                        <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- 产品1 -->
+                    <div class="card bg-white overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="代餐粉" class="w-full h-32 object-cover">
+                        <div class="p-3">
+                            <h3 class="font-medium text-sm mb-1" data-i18n="app.home.products.product1.title">营养均衡代餐粉</h3>
+                            <div class="text-orange-500 font-bold mb-2">¥69.00</div>
+                            <p class="text-xs text-gray-500 mb-2" data-i18n="app.home.products.product1.description">科学配比，均衡营养，饱腹感强</p>
+                            <button class="w-full bg-orange-500 text-white rounded-full py-2 text-sm font-medium" data-i18n="app.home.products.buyNow">立即购买</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 产品2 -->
+                    <div class="card bg-white overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1547414876-84671013f45c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="代餐零食" class="w-full h-32 object-cover">
+                        <div class="p-3">
+                            <h3 class="font-medium text-sm mb-1" data-i18n="app.home.products.product2.title">高纤谷物代餐饼干</h3>
+                            <div class="text-orange-500 font-bold mb-2">¥45.00</div>
+                            <p class="text-xs text-gray-500 mb-2" data-i18n="app.home.products.product2.description">高纤维，低热量，随时享用</p>
+                            <button class="w-full bg-orange-500 text-white rounded-full py-2 text-sm font-medium" data-i18n="app.home.products.buyNow">立即购买</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 创业社群 -->
+            <div class="px-5 py-4 mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold" data-i18n="app.home.community">创业社群</h2>
+                    <a href="#" class="text-orange-500 text-sm" data-i18n="app.home.joinNow">立即加入</a>
+                </div>
+                
+                <div class="card bg-white p-4">
+                    <div class="flex items-center mb-3">
+                        <div class="flex -space-x-3 mr-4">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="社群成员" class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="社群成员" class="w-8 h-8 rounded-full border-2 border-white">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="社群成员" class="w-8 h-8 rounded-full border-2 border-white">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium border-2 border-white">+32</div>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-sm" data-i18n="app.home.communityName">辟谷代餐品牌创业圈</h3>
+                            <p class="text-gray-500 text-xs" data-i18n="app.home.communityMembers">已有35位创业者加入</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.home.communityDescription">加入我们的创业社群，与志同道合的伙伴一起交流，分享创业经验，互相支持！</p>
+                    
+                    <div class="flex justify-between">
+                        <div class="text-center">
+                            <div class="text-orange-500 font-bold">15+</div>
+                            <div class="text-gray-500 text-xs" data-i18n="app.home.communityMetrics.activities">每月活动</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-orange-500 font-bold">30+</div>
+                            <div class="text-gray-500 text-xs" data-i18n="app.home.communityMetrics.resources">共享资源</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-orange-500 font-bold">5+</div>
+                            <div class="text-gray-500 text-xs" data-i18n="app.home.communityMetrics.projects">合作项目</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Tab Bar -->
+        <div class="ios-tab-bar">
+            <div class="flex justify-around h-full">
+                <a href="home.html" class="tab-item active">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="app.tabs.home">首页</span>
+                </a>
+                <a href="startup_plan.html" class="tab-item">
+                    <i class="fas fa-rocket"></i>
+                    <span data-i18n="app.tabs.plan">计划</span>
+                </a>
+                <a href="milestone_tracker.html" class="tab-item">
+                    <i class="fas fa-tasks"></i>
+                    <span data-i18n="app.tabs.milestones">里程碑</span>
+                </a>
+                <a href="resources.html" class="tab-item">
+                    <i class="fas fa-book"></i>
+                    <span data-i18n="app.tabs.resources">资源</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 加载语言文件并应用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取当前语言设置，默认为中文
+            const currentLanguage = localStorage.getItem('language') || 'zh';
+            
+            // 加载对应的语言文件
+            fetch(`${currentLanguage}.json`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Language file not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    applyTranslations(data);
+                })
+                .catch(error => {
+                    console.error('Error loading language file:', error);
+                });
+            
+            // 应用翻译
+            function applyTranslations(translations) {
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    const translation = getNestedTranslation(translations, key);
+                    
+                    if (translation) {
+                        element.textContent = translation;
+                    }
+                });
+                
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-i18n-placeholder');
+                    const translation = getNestedTranslation(translations, key);
+                    
+                    if (translation) {
+                        element.placeholder = translation;
+                    }
+                });
+            }
+            
+            // 获取嵌套的翻译内容
+            function getNestedTranslation(translations, key) {
+                const keys = key.split('.');
+                let result = translations;
+                
+                for (const k of keys) {
+                    if (result && result[k] !== undefined) {
+                        result = result[k];
+                    } else {
+                        return null;
+                    }
+                }
+                
+                return result;
+            }
+        });
+    </script>
+</body>
+</html>

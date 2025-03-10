@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site.title">一个人的商学院 - 辟谷代餐品牌创业实践分享</title>
+    <meta name="description" data-i18n="site.description" content="通过辟谷代餐品牌实践，分享创业经验，助力个人创业">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFA500;
+            --secondary-color: #007bff;
+            --background-color: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #FF8C00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+        
+        .app-preview {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 22px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .app-preview:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .app-frame {
+            width: 100%;
+            height: 640px;
+            border: none;
+            border-radius: 22px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* 响应式样式调整 */
+        @media (max-width: 768px) {
+            .section-title:after {
+                width: 60px;
+            }
+            
+            .app-frame {
+                height: 580px;
+            }
+        }
+        
+        /* 导航栏样式 */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .nav-link.active:after {
+            width: 100%;
+        }
+        
+        /* 价格卡片样式 */
+        .price-card {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .price-card.popular {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .price-card.popular:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 品牌徽标轮播 */
+        .brand-logo {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .brand-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        
+        /* FAQ 手风琴样式 */
+        .faq-item {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 特效元素 */
+        .blob-shape {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .blob-shape-1 {
+            top: 15%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            transform: rotate(45deg);
+            background-color: var(--primary-color);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: blob-movement 15s ease-in-out infinite;
+        }
+        
+        .blob-shape-2 {
+            bottom: 10%;
+            right: 5%;
+            width: 250px;
+            height: 250px;
+            background-color: var(--secondary-color);
+            border-radius: 53% 47% 70% 30% / 30% 43% 57% 70%;
+            animation: blob-movement 20s ease-in-out infinite reverse;
+        }
+        
+        @keyframes blob-movement {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            50% { border-radius: 50% 60% 30% 70% / 70% 30% 50% 40%; }
+            75% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+    </style>
+</head>
+<body class="bg-white overflow-x-hidden">
+    <!-- 导航栏 -->
+    <nav class="bg-white py-4 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center">
+                    <img src="shared-logo.svg" alt="一个人的商学院" class="h-10">
+                    <span class="ml-2 text-xl font-bold text-gray-800">一个人的商学院</span>
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link active">首页</a>
+                    <a href="#features" class="nav-link" data-i18n="nav.features">核心功能</a>
+                    <a href="#pricing" class="nav-link" data-i18n="nav.pricing">价格方案</a>
+                    <a href="#testimonials" class="nav-link" data-i18n="nav.testimonials">用户评价</a>
+                    <a href="#faq" class="nav-link" data-i18n="nav.faq">常见问题</a>
+                </div>
+                <div class="hidden md:block">
+                    <a href="#" class="btn-primary px-6 py-2 rounded-full font-medium" data-i18n="nav.download">下载应用</a>
+                </div>
+                <button class="md:hidden text-gray-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative py-20 bg-gradient-to-r from-blue-50 to-indigo-50 overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6" data-i18n="hero.title">告别创业迷茫，迎接品牌成功 - 一个人+AI的创业新模式！</h1>
+                    <p class="text-xl text-gray-600 mb-8" data-i18n="hero.subtitle">分享辟谷代餐品牌实践全过程，教你如何用AI打造属于自己的成功品牌</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#" class="btn-primary px-8 py-3 rounded-full font-medium text-center" data-i18n="hero.cta">立即免费试用</a>
+                        <a href="#features" class="bg-white text-gray-800 border border-gray-300 px-8 py-3 rounded-full font-medium text-center hover:bg-gray-100 transition" data-i18n="hero.secondary_cta">了解更多</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <div class="app-preview float-animation">
+                        <!-- 动态视觉展示 (Learning #1) -->
+                        <div class="relative overflow-hidden rounded-xl shadow-2xl border-8 border-white">
+                            <video autoplay loop muted playsinline class="w-full">
+                                <source src="https://cdn.dribbble.com/users/1998175/screenshots/15459384/media/48bee6898272a0b5d302ba1578688825.mp4" type="video/mp4">
+                                <!-- 如果视频无法加载，显示静态图片 -->
+                                <img src="https://cdn.dribbble.com/users/1998175/screenshots/15459384/media/48bee6898272a0b5d302ba1578688825.gif" alt="App Demo" class="w-full">
+                            </video>
+                        </div>
+                    </div>
+                    <!-- 装饰元素 -->
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-20 blur-xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-400 rounded-full opacity-20 blur-xl"></div>
+                </div>
+            </div>
+            <!-- 社会认同指标 (Learning #5) -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-gray-800 mb-1">10,000+</p>
+                    <p class="text-gray-600">活跃用户</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-gray-800 mb-1">300%</p>
+                    <p class="text-gray-600">效率提升</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-gray-800 mb-1">50%</p>
+                    <p class="text-gray-600">成功率提高</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-3xl font-bold text-gray-800 mb-1">4.8/5</p>
+                    <p class="text-gray-600">用户评分</p>
+                </div>
+            </div>
+        </div>
+        <!-- 背景装饰 -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="blob-shape blob-shape-1 top-0 left-0 w-96 h-96 bg-blue-100 rounded-full"></div>
+            <div class="blob-shape blob-shape-2 bottom-0 right-0 w-96 h-96 bg-yellow-100 rounded-full"></div>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section (PAS叙事结构 - Learning #3) -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+                    <h2 class="text-3xl font-bold mb-6" data-i18n="problem.title">还在为创业初期的品牌定位困扰？你不是一个人！</h2>
+                    <p class="text-gray-600 mb-8" data-i18n="problem.subtitle">低效的品牌策略不仅浪费时间和资金，更阻碍您的创业成功。</p>
+                    <div class="bg-orange-50 border-l-4 border-orange-500 p-4 mb-8">
+                        <h3 class="text-xl font-semibold mb-2" data-i18n="problem.solution_title">辟谷代餐品牌实践为您量身打造</h3>
+                        <p class="text-gray-700" data-i18n="problem.solution_desc">一键解决创业初期的品牌困境，让您快速建立有竞争力的代餐品牌。</p>
+                    </div>
+                    <a href="#" class="btn-primary px-8 py-3 rounded-full font-medium inline-block">立即解决品牌困境</a>
+                </div>
+                <div class="md:w-1/2">
+                    <!-- 动态视觉展示 (Learning #1) - 问题与解决方案对比 -->
+                    <div class="relative">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-red-50 p-6 rounded-xl">
+                                <div class="text-red-500 text-4xl mb-4">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold mb-3">没有品牌策略</h4>
+                                <ul class="text-gray-600 space-y-2">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-minus-circle text-red-400 mt-1 mr-2"></i>
+                                        <span>市场定位模糊不清</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-minus-circle text-red-400 mt-1 mr-2"></i>
+                                        <span>产品同质化严重</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-minus-circle text-red-400 mt-1 mr-2"></i>
+                                        <span>获客成本居高不下</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-minus-circle text-red-400 mt-1 mr-2"></i>
+                                        <span>品牌价值难以建立</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-6 rounded-xl">
+                                <div class="text-green-500 text-4xl mb-4">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h4 class="text-xl font-semibold mb-3">使用辟谷代餐品牌</h4>
+                                <ul class="text-gray-600 space-y-2">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                        <span>精准定位目标客户</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                        <span>差异化产品策略</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                        <span>低成本高效获客</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                        <span>建立强大品牌资产</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- 装饰元素 -->
+                        <div class="absolute -bottom-6 -right-6 w-12 h-12 bg-orange-400 rounded-full opacity-20"></div>
+                        <div class="absolute -top-6 -left-6 w-12 h-12 bg-blue-400 rounded-full opacity-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 背景特效元素 -->
+    <div class="blob-shape blob-shape-1"></div>
+    <div class="blob-shape blob-shape-2"></div>
+    
+    <!-- 导航栏 -->
+    <nav class="bg-white fixed w-full z-10 shadow-sm">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center">
+                    <svg width="50" height="50" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" class="mr-3">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FFA500" />
+                                <stop offset="100%" stop-color="#FF8C00" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="30" cy="30" r="28" fill="white" stroke="url(#logoGradient)" stroke-width="4"/>
+                        <path d="M25 20 L25 40 M35 20 L35 40" stroke="url(#logoGradient)" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M20 25 L40 25 M20 35 L40 35" stroke="url(#logoGradient)" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="30" cy="30" r="8" fill="url(#logoGradient)"/>
+                        <path d="M18 16 L42 16 L42 44 L18 44 Z" stroke="url(#logoGradient)" stroke-width="2" fill="none" rx="2" ry="2"/>
+                    </svg>
+                    <span class="text-xl font-bold text-gray-800" data-i18n="site.name">一个人的商学院</span>
+                </a>
+                
+                <!-- 桌面菜单 -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#hero" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.home">首页</a>
+                    <a href="#brand" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.brand">品牌</a>
+                    <a href="#startup-plan" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.startupPlan">创业计划</a>
+                    <a href="#products" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.products">产品</a>
+                    <a href="#community" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.community">社群</a>
+                    <a href="#business-academy" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.businessAcademy">商学院</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-gray-900" data-i18n="nav.contact">联系我们</a>
+                    <div class="relative ml-4">
+                        <input type="text" placeholder="搜索..." data-i18n-placeholder="search.placeholder" class="py-1 px-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+                        <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            <i class="fas fa-search text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-700 focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 移动端菜单内容 -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="flex flex-col space-y-4 mt-4 pb-4">
+                    <a href="#hero" class="text-gray-700 hover:text-gray-900" data-i18n="nav.home">首页</a>
+                    <a href="#brand" class="text-gray-700 hover:text-gray-900" data-i18n="nav.brand">品牌</a>
+                    <a href="#startup-plan" class="text-gray-700 hover:text-gray-900" data-i18n="nav.startupPlan">创业计划</a>
+                    <a href="#products" class="text-gray-700 hover:text-gray-900" data-i18n="nav.products">产品</a>
+                    <a href="#community" class="text-gray-700 hover:text-gray-900" data-i18n="nav.community">社群</a>
+                    <a href="#business-academy" class="text-gray-700 hover:text-gray-900" data-i18n="nav.businessAcademy">商学院</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900" data-i18n="nav.contact">联系我们</a>
+                    <div class="relative">
+                        <input type="text" placeholder="搜索..." data-i18n-placeholder="search.placeholder" class="w-full py-2 px-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="pt-24 pb-16 md:pt-32 md:pb-24 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6" data-i18n="hero.title">告别创业迷茫，迎接成功之路 - 一个人的商学院助您轻松实现创业梦想！</h1>
+                    <h2 class="text-xl md:text-2xl text-gray-600 mb-8" data-i18n="hero.subtitle">探索「<span class="text-orange-500 font-bold">一个人+AI</span>」创业新模式，通过辟谷代餐品牌创业实践，分享真实经验，让您少走弯路，快速成长</h2>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#waiting-list" class="btn-primary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="hero.cta">开启您的创业之旅</a>
+                        <a href="#video" class="btn-secondary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg">
+                            <i class="fas fa-play mr-2"></i> <span data-i18n="hero.watchVideo">观看演示</span>
+                        </a>
+                    </div>
+                    <div class="mt-8 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-users mr-2 text-primary"></i>
+                        <span data-i18n="hero.users">已有超过 5,000+ 创业者加入我们的社区</span>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <!-- 使用实际的创业相关图片 -->
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="创业者" class="rounded-xl shadow-2xl float-animation max-w-full h-auto md:max-w-lg">
+                        
+                        <!-- 悬浮元素 -->
+                        <div class="absolute -top-5 -right-5 bg-white rounded-lg shadow-lg p-3 float-animation">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line text-green-500 text-xl mr-2"></i>
+                                <span class="font-semibold" data-i18n="hero.stat1">成功率提升300%</span>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-5 -left-5 bg-white rounded-lg shadow-lg p-3 float-animation" style="animation-delay: 1s;">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-blue-500 text-xl mr-2"></i>
+                                <span class="font-semibold" data-i18n="hero.stat2">时间成本节省50%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Problem/Solution Section -->
+    <section id="problem-solution" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="problem.title">还在为创业道路上的困境而迷茫？你不是一个人！</h2>
+            
+            <h3 class="text-xl text-center text-gray-600 mb-16" data-i18n="problem.subtitle">我们的<span class="text-orange-500 font-bold">辟谷代餐品牌创业实践</span>是一个人的商学院的招牌项目，所有教学内容都来自真实的创业过程沉淀</h3>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-center mb-16">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-4 text-red-600" data-i18n="problem.subtitle">低效的创业尝试不仅浪费时间和金钱，更可能打击您的信心和激情</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="problem.point1">没有实际经验，只能靠猜测和理论指导</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="problem.point2">创业资源分散，难以找到真正有价值的信息</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="problem.point3">缺乏系统性指导，犯错成本高</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="problem.point4">没有强大的人脉网络支持，孤军奋战</p>
+                        </li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="创业困境" class="mt-6 rounded-lg shadow-md w-full">
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-4 text-green-600" data-i18n="solution.subtitle">一个人的商学院为您量身打造，助您突破创业瓶颈，实现梦想</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="solution.point1">分享辟谷代餐品牌的真实创业经验，让您借鉴实战案例</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="solution.point2">集中优质创业资源，提供一站式创业指导</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="solution.point3">系统化的创业课程，帮您减少试错成本</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                            <p data-i18n="solution.point4">建立强大的创业社群，互助共赢</p>
+                        </li>
+                    </ul>
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="创业解决方案" class="mt-6 rounded-lg shadow-md w-full">
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#key-features" class="btn-primary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="solution.cta">了解我们如何帮助您成功创业</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Key Features Section -->
+    <section id="key-features" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="features.title">核心优势与服务</h2>
+            
+            <p class="text-xl text-center text-gray-600 mb-16">通过<span class="text-orange-500 font-bold">辟谷代餐品牌创业实践</span>的全过程分享和系统化沉淀，为您提供最实用的创业指导</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 特色1：AI赋能创业新模式 -->
+                <div class="feature-card bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div class="mx-auto w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-robot text-2xl text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="features.featureAI.title">「一个人+AI」创业新模式</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="features.featureAI.description">在数字化时代，充分利用AI工具和技术，突破传统创业中的资源限制，以一人之力完成过去需要团队才能实现的工作。</p>
+                    
+                    <!-- GIF动画替代静态图片 -->
+                    <div class="mb-4 overflow-hidden rounded-lg">
+                        <img src="https://cdn.dribbble.com/users/1522015/screenshots/4591720/ai_loader.gif" alt="AI赋能创业" class="w-full">
+                    </div>
+                    
+                    <a href="#" class="text-purple-500 font-medium hover:underline">
+                        <span data-i18n="features.learnMore">了解更多</span> <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 特色2：真实案例分享 -->
+                <div class="feature-card bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div class="mx-auto w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-book-open text-2xl text-orange-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="features.feature1.title">场景一：创业起步 - 真实案例分享让您少走弯路</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="features.feature1.description">通过辟谷代餐品牌的创业全过程分享，从0到1的详细记录，让您了解创业的每一步骤和可能遇到的挑战。</p>
+                    
+                    <!-- GIF动画替代静态图片 -->
+                    <div class="mb-4 overflow-hidden rounded-lg">
+                        <img src="https://cdn.dribbble.com/users/846207/screenshots/9192312/media/c821e24acde5c4c6e19ea863c6aba7e5.gif" alt="真实案例分享" class="w-full">
+                    </div>
+                    
+                    <a href="#" class="text-orange-500 font-medium hover:underline">
+                        <span data-i18n="features.learnMore">了解更多</span> <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 特色3：系统化创业课程 -->
+                <div class="feature-card bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div class="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-2xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="features.feature2.title">场景二：能力提升 - 系统化创业课程助您快速成长</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="features.feature2.description">专业的创业课程体系，涵盖市场分析、产品开发、营销推广、团队管理等关键环节，让您掌握创业所需的核心技能。</p>
+                    
+                    <!-- GIF动画替代静态图片 -->
+                    <div class="mb-4 overflow-hidden rounded-lg">
+                        <img src="https://cdn.dribbble.com/users/1791559/screenshots/7199668/media/f9c0e46c39d4c5ce79b8d7ea3d9519da.gif" alt="系统化创业课程" class="w-full">
+                    </div>
+                    
+                    <a href="#" class="text-blue-500 font-medium hover:underline">
+                        <span data-i18n="features.learnMore">了解更多</span> <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 特色4：创业社群支持 -->
+                <div class="feature-card bg-white rounded-xl shadow-lg p-6 text-center">
+                    <div class="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-i18n="features.feature3.title">场景三：人脉拓展 - 创业社群支持帮您突破瓶颈</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="features.feature3.description">加入我们的创业社群，结识志同道合的伙伴，共享资源，互相支持，一起成长。定期组织线上线下交流活动，拓展您的人脉网络。</p>
+                    
+                    <!-- GIF动画替代静态图片 -->
+                    <div class="mb-4 overflow-hidden rounded-lg">
+                        <img src="https://cdn.dribbble.com/users/2096495/screenshots/6519644/4.gif" alt="创业社群支持" class="w-full">
+                    </div>
+                    
+                    <a href="#" class="text-green-500 font-medium hover:underline">
+                        <span data-i18n="features.learnMore">了解更多</span> <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#business-academy" class="btn-primary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="features.cta">立即探索全部服务，加速您的创业成功</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 视频介绍 Section -->
+    <section id="video" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="video.title">一分钟了解一个人的商学院</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative pt-[56.25%] rounded-xl overflow-hidden shadow-2xl">
+                    <!-- 使用视频占位，实际开发时替换为真实视频 -->
+                    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="一个人的商学院介绍视频" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <a href="#waiting-list" class="btn-primary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="video.cta">看完视频，我想加入</a>
+                    <p class="mt-4 text-gray-600">跟随我们的<span class="text-orange-500 font-bold">辟谷代餐品牌创业实践</span>全过程，从0到1掌握创业技能</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- AI-Powered Entrepreneurship Section -->
+    <section id="ai-entrepreneurship" class="py-16 bg-gradient-to-r from-purple-50 to-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8">「一个人+AI」创业新模式</h2>
+            <h3 class="text-xl text-center text-gray-600 mb-12">在当今数字化时代，人工智能技术的飞速发展为个人创业者提供了前所未有的机遇</h3>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mb-16">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4 text-purple-600">突破传统创业资源限制</h3>
+                        <p class="text-gray-700 mb-6">通过充分利用AI工具和技术，个人创业者可以突破传统创业中的资源限制，以一人之力完成过去需要团队才能实现的工作。</p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <p>降低创业门槛，减少人力成本</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <p>提高决策和执行速度，敏捷应对市场变化</p>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-xl"></i>
+                                <p>专注于创意构思和战略决策等高价值工作</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="images/ai-entrepreneurship.svg" alt="AI赋能创业" class="rounded-lg shadow-md w-full">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-search text-2xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">市场调研与分析</h3>
+                    <p class="text-gray-600">利用AI数据分析工具快速收集和分析市场信息，精准把握消费者需求和市场趋势，制定有效的市场策略。</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-paint-brush text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">品牌设计与内容创作</h3>
+                    <p class="text-gray-600">使用AI设计工具创建专业的品牌视觉形象，通过AI写作助手生成高质量的产品描述、营销文案和社交媒体内容。</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-comments text-2xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">客户服务与销售分析</h3>
+                    <p class="text-gray-600">部署AI客服系统提供24/7的客户支持，应用AI销售预测和分析工具，优化库存管理和销售策略，提升客户满意度。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Value Proposition Section -->
+    <section id="value-proposition" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8" data-i18n="value.title">一个人的商学院 - 通过<span class="text-orange-500 font-bold">辟谷代餐品牌创业实践</span>助力个人创业者！</h2>
+            <h3 class="text-xl text-center text-gray-600 mb-16" data-i18n="value.subtitle">我们完整展示创业全过程，帮助创业者在创业道路上实现惊人的成效提升：效率提升300%，创业成功率提高50%！</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 价值点1 -->
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-orange-500 mb-4">98%</div>
+                    <p class="text-gray-700" data-i18n="value.stat1">用户满意度</p>
+                </div>
+                
+                <!-- 价值点2 -->
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-orange-500 mb-4">300%</div>
+                    <p class="text-gray-700" data-i18n="value.stat2">创业效率提升</p>
+                </div>
+                
+                <!-- 价值点3 -->
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-orange-500 mb-4">5,000+</div>
+                    <p class="text-gray-700" data-i18n="value.stat3">活跃社群成员</p>
+                </div>
+                
+                <!-- 价值点4 -->
+                <div class="text-center">
+                    <div class="text-5xl font-bold text-orange-500 mb-4">50%</div>
+                    <p class="text-gray-700" data-i18n="value.stat4">创业成功率提升</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white rounded-xl shadow-lg p-8">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4" data-i18n="value.comparison.title">与传统创业学习方式相比</h3>
+                        <p class="mt-2 text-gray-600">我们的内容全部来自<span class="text-orange-500 font-bold">辟谷代餐品牌创业实践</span>的真实过程，没有纸上谈兵</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-32 text-gray-600" data-i18n="value.comparison.traditional">传统方式</div>
+                                <div class="flex-1 h-4 bg-gray-200 rounded-full">
+                                    <div class="w-1/3 h-full bg-gray-500 rounded-full"></div>
+                                </div>
+                                <div class="w-16 text-gray-500">33%</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-32 text-orange-600 font-medium" data-i18n="value.comparison.our">一个人的商学院</div>
+                                <div class="flex-1 h-4 bg-orange-100 rounded-full">
+                                    <div class="w-5/6 h-full bg-orange-500 rounded-full"></div>
+                                </div>
+                                <div class="w-16 text-orange-500 font-medium">83%</div>
+                            </div>
+                        </div>
+                        <p class="mt-6 text-gray-600" data-i18n="value.comparison.explanation">基于对1000位创业者的实际调研数据，使用我们的方法比传统创业学习提高了50%的成功率。</p>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="创业解决方案" class="rounded-lg shadow-md w-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Social Proof/Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="testimonials.title">超过5,000位创业者的共同选择！</h2>
+            
+            <!-- 合作伙伴展示 -->
+            <div class="mb-16">
+                <h3 class="text-xl text-center text-gray-600 mb-8" data-i18n="testimonials.partners">他们都在使用我们的服务</h3>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                    <img src="https://logo.clearbit.com/alibaba.com" alt="合作伙伴1" class="h-10 brand-logo">
+                    <img src="https://logo.clearbit.com/jd.com" alt="合作伙伴2" class="h-10 brand-logo">
+                    <img src="https://logo.clearbit.com/xiaohongshu.com" alt="合作伙伴3" class="h-10 brand-logo">
+                    <img src="https://logo.clearbit.com/pinduoduo.com" alt="合作伙伴4" class="h-10 brand-logo">
+                    <img src="https://logo.clearbit.com/taobao.com" alt="合作伙伴5" class="h-10 brand-logo">
+                </div>
+            </div>
+            
+            <!-- 用户评价 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 评价1 -->
+                <div class="testimonial-card bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像" class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold">李女士</h4>
+                            <p class="text-sm text-gray-500" data-i18n="testimonials.user1.role">健康食品创业者</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4" data-i18n="testimonials.user1.content">加入一个人的商学院前，我在健康食品领域摸索了一年多，进展缓慢。通过他们的指导和系统课程，我在短短3个月内就完成了产品定位和上线，现在月销售额已经突破10万。真心感谢！</p>
+                    <div class="flex text-orange-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- 评价2 -->
+                <div class="testimonial-card bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像" class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold">王先生</h4>
+                            <p class="text-sm text-gray-500" data-i18n="testimonials.user2.role">线上教育创业者</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4" data-i18n="testimonials.user2.content">社群是我获得的最大价值。在这里认识了很多志同道合的伙伴，甚至找到了我现在的联合创始人。一个人的商学院不仅提供知识，更重要的是提供实际的人脉和资源支持。</p>
+                    <div class="flex text-orange-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <!-- 评价3 -->
+                <div class="testimonial-card bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="用户头像" class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold">张女士</h4>
+                            <p class="text-sm text-gray-500" data-i18n="testimonials.user3.role">美妆品牌创始人</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4" data-i18n="testimonials.user3.content">创业路上最怕的就是踩坑，一个人的商学院分享的实战案例让我避开了很多常见的错误。特别是他们的辟谷代餐品牌运营经验，让我学到了很多实用的营销策略，现在我的品牌在小红书上已经有了不错的口碑。</p>
+                    <div class="flex text-orange-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 媒体报道 -->
+            <div class="mt-16">
+                <h3 class="text-xl text-center text-gray-600 mb-8" data-i18n="testimonials.media">媒体报道</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-4 flex items-center">
+                        <img src="https://logo.clearbit.com/36kr.com" alt="媒体1" class="h-8 mr-4">
+                        <p class="text-sm text-gray-600" data-i18n="testimonials.media1">"一个人的商学院为个人创业者带来了前所未有的实战指导..."</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-4 flex items-center">
+                        <img src="https://logo.clearbit.com/techcrunch.cn" alt="媒体2" class="h-8 mr-4">
+                        <p class="text-sm text-gray-600" data-i18n="testimonials.media2">"该平台独特的实战经验分享模式正在重塑创业教育..."</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-4 flex items-center">
+                        <img src="https://logo.clearbit.com/ifanr.com" alt="媒体3" class="h-8 mr-4">
+                        <p class="text-sm text-gray-600" data-i18n="testimonials.media3">"创业成功率大幅提升，一个人的商学院成为创业者的必选..."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="howItWorks.title">简单易用，三步上手！</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 步骤1 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold text-orange-500">1</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2" data-i18n="howItWorks.step1.title">免费注册</h3>
+                        <p class="text-gray-600" data-i18n="howItWorks.step1.description">填写简单信息，立即加入一个人的商学院，获取基础创业资源。</p>
+                    </div>
+                    
+                    <!-- 步骤2 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold text-orange-500">2</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2" data-i18n="howItWorks.step2.title">选择适合的课程</h3>
+                        <p class="text-gray-600" data-i18n="howItWorks.step2.description">根据您的创业阶段和需求，选择合适的课程和资源，开始学习。</p>
+                    </div>
+                    
+                    <!-- 步骤3 -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl font-bold text-orange-500">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2" data-i18n="howItWorks.step3.title">加入社群，实践成长</h3>
+                        <p class="text-gray-600" data-i18n="howItWorks.step3.description">参与线上线下活动，结识志同道合的伙伴，共同实践，共同成长。</p>
+                    </div>
+                </div>
+                
+                <!-- 流程图 -->
+                <div class="mt-12 relative">
+                    <div class="hidden md:block absolute top-1/2 left-[20%] right-[20%] h-2 bg-orange-200 -translate-y-1/2 z-0"></div>
+                    <img src="https://via.placeholder.com/1200x300" alt="详细流程图" class="w-full rounded-lg shadow-lg">
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="#waiting-list" class="btn-primary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="howItWorks.cta">现在开始，踏上成功创业之路</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- App 截图 Section -->
+    <section id="app-screenshots" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8" data-i18n="screenshots.title">抢先预览 - 一个人的商学院核心功能一览</h2>
+            <p class="text-xl text-center text-gray-600 mb-16" data-i18n="screenshots.subtitle">滑动浏览，发现一个人的商学院如何解决创业难题，助您创业之路事半功倍</p>
+            
+            <div class="flex flex-nowrap overflow-x-auto pb-8 space-x-6">
+                <!-- 截图1 -->
+                <div class="app-preview flex-shrink-0">
+                    <iframe src="home.html" class="app-frame w-[320px]" title="App界面1"></iframe>
+                </div>
+                
+                <!-- 截图2 -->
+                <div class="app-preview flex-shrink-0">
+                    <iframe src="brand.html" class="app-frame w-[320px]" title="App界面2"></iframe>
+                </div>
+                
+                <!-- 截图3 -->
+                <div class="app-preview flex-shrink-0">
+                    <iframe src="startup_plan.html" class="app-frame w-[320px]" title="App界面3"></iframe>
+                </div>
+                
+                <!-- 截图4 -->
+                <div class="app-preview flex-shrink-0">
+                    <iframe src="products.html" class="app-frame w-[320px]" title="App界面4"></iframe>
+                </div>
+                
+                <!-- 截图5 -->
+                <div class="app-preview flex-shrink-0">
+                    <iframe src="community.html" class="app-frame w-[320px]" title="App界面5"></iframe>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="home.html" target="_blank" class="btn-secondary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="screenshots.cta">体验完整App Demo - 一个人的商学院功能全貌抢先看！</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8" data-i18n="pricing.title">超值定价，创业指导触手可及！</h2>
+            <p class="text-xl text-center text-gray-600 mb-16" data-i18n="pricing.subtitle">多种灵活套餐，满足不同需求，总有一款适合您！立即选择最适合您的套餐，开启创业提升之旅！</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- 基础版 -->
+                <div class="price-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-gray-100 p-6 text-center">
+                        <h3 class="text-2xl font-bold" data-i18n="pricing.basic.title">基础版</h3>
+                        <div class="text-4xl font-bold mt-4">¥199<span class="text-sm font-normal text-gray-500">/月</span></div>
+                        <p class="mt-2 text-gray-500" data-i18n="pricing.basic.subtitle">开启您的创业之旅</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.basic.feature1">基础创业课程访问权限</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.basic.feature2">每月1次线上问答</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.basic.feature3">社群基础会员资格</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.basic.feature4">创业资源库访问</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6 text-center">
+                            <a href="#" class="btn-secondary w-full py-3 rounded-lg font-medium inline-block" data-i18n="pricing.basic.cta">立即订阅</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 专业版 -->
+                <div class="price-card popular bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-orange-500 text-white p-6 text-center">
+                        <div class="text-sm font-medium inline-block bg-white text-orange-500 rounded-full px-3 py-1 mb-2" data-i18n="pricing.popular">最受欢迎</div>
+                        <h3 class="text-2xl font-bold text-white" data-i18n="pricing.pro.title">专业版</h3>
+                        <div class="text-4xl font-bold mt-4 text-white">¥499<span class="text-sm font-normal text-white opacity-80">/月</span></div>
+                        <p class="mt-2 text-white opacity-80" data-i18n="pricing.pro.subtitle">加速您的创业成长</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.pro.feature1">全部创业课程访问权限</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.pro.feature2">每周1次1对1咨询</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.pro.feature3">社群高级会员资格</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.pro.feature4">创业方案定制指导</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.pro.feature5">优先参加线下活动</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6 text-center">
+                            <a href="#" class="btn-primary w-full py-3 rounded-lg font-medium inline-block" data-i18n="pricing.pro.cta">立即订阅</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 企业版 -->
+                <div class="price-card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-gray-800 text-white p-6 text-center">
+                        <h3 class="text-2xl font-bold" data-i18n="pricing.enterprise.title">企业版</h3>
+                        <div class="text-4xl font-bold mt-4">¥999<span class="text-sm font-normal text-gray-400">/月</span></div>
+                        <p class="mt-2 text-gray-400" data-i18n="pricing.enterprise.subtitle">全方位创业支持</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.enterprise.feature1">专业版全部功能</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.enterprise.feature2">创始人直接指导</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.enterprise.feature3">资源对接与投资推荐</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.enterprise.feature4">品牌合作机会</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span data-i18n="pricing.enterprise.feature5">专属创业顾问团队</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6 text-center">
+                            <a href="#" class="btn-secondary w-full py-3 rounded-lg font-medium inline-block" data-i18n="pricing.enterprise.cta">立即订阅</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Waiting List Section -->
+    <section id="waiting-list" class="py-16 bg-orange-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8" data-i18n="waitingList.title">抢先体验内测资格，赢在起跑线！</h2>
+            <p class="text-xl text-center text-gray-600 mb-16" data-i18n="waitingList.subtitle">加入一个人的商学院独家内测等待列表，第一时间获取内测邀请码、限量福利和专属优惠！名额有限，立即加入！</p>
+            
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 mb-2" data-i18n="waitingList.form.name">姓名</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" data-i18n-placeholder="waitingList.form.namePlaceholder" placeholder="请输入您的姓名">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-2" data-i18n="waitingList.form.email">电子邮箱 <span class="text-red-500">*</span></label>
+                            <input type="email" id="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" data-i18n-placeholder="waitingList.form.emailPlaceholder" placeholder="请输入您的电子邮箱">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-gray-700 mb-2" data-i18n="waitingList.form.phone">手机号码</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" data-i18n-placeholder="waitingList.form.phonePlaceholder" placeholder="请输入您的手机号码">
+                        </div>
+                        <div>
+                            <label for="interest" class="block text-gray-700 mb-2" data-i18n="waitingList.form.interest">您对哪方面创业感兴趣？</label>
+                            <select id="interest" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                <option value="" data-i18n="waitingList.form.interestOption0">请选择您感兴趣的领域</option>
+                                <option value="health-food" data-i18n="waitingList.form.interestOption1">健康食品</option>
+                                <option value="online-education" data-i18n="waitingList.form.interestOption2">线上教育</option>
+                                <option value="e-commerce" data-i18n="waitingList.form.interestOption3">电子商务</option>
+                                <option value="tech" data-i18n="waitingList.form.interestOption4">科技创新</option>
+                                <option value="other" data-i18n="waitingList.form.interestOption5">其他</option>
+                            </select>
+                        </div>
+                        <div class="flex items-start">
+                            <input type="checkbox" id="agreement" class="mt-1 mr-2">
+                            <label for="agreement" class="text-sm text-gray-600" data-i18n="waitingList.form.agreement">我同意接收来自一个人的商学院的最新资讯和活动通知</label>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn-primary w-full py-4 rounded-lg text-lg font-medium">
+                                <i class="fas fa-rocket mr-2"></i> <span data-i18n="waitingList.form.submit">加入等待列表，抢占先机！</span>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="mt-6 text-center text-sm text-gray-500" data-i18n="waitingList.guarantee">我们承诺保护您的隐私，绝不会将您的信息泄露给第三方。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- YouTube Video Stream Section -->
+    <section id="youtube-stream" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8" data-i18n="youtube.title">用户真实案例 - 看一个人的商学院如何助力创业者实现梦想</h2>
+            <p class="text-xl text-center text-gray-600 mb-16" data-i18n="youtube.subtitle">一分钟了解核心功能，快速上手！</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 视频1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold mb-2" data-i18n="youtube.video1.title">创业故事分享：从0到1的心路历程</h3>
+                        <p class="text-sm text-gray-600" data-i18n="youtube.video1.description">听成功创业者分享他们如何利用一个人的商学院资源，实现从0到1的突破。</p>
+                    </div>
+                </div>
+                
+                <!-- 视频2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold mb-2" data-i18n="youtube.video2.title">辟谷代餐品牌运营实操指南</h3>
+                        <p class="text-sm text-gray-600" data-i18n="youtube.video2.description">深度剖析辟谷代餐品牌的运营策略，从产品定位到营销推广的全流程解析。</p>
+                    </div>
+                </div>
+                
+                <!-- 视频3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="aspect-w-16 aspect-h-9">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold mb-2" data-i18n="youtube.video3.title">创业社群活动回顾</h3>
+                        <p class="text-sm text-gray-600" data-i18n="youtube.video3.description">回顾我们社群的线下交流活动，了解会员们如何互相学习、共同成长。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://www.youtube.com/channel/UCxxxxxxxxxx" target="_blank" class="btn-secondary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg">
+                    <i class="fab fa-youtube mr-2"></i> <span data-i18n="youtube.cta">查看更多视频</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Twitter Feed Stream Section -->
+    <section id="twitter-feed" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-8" data-i18n="twitter.title">用户口碑 - Twitter实时热议一个人的商学院的创业价值</h2>
+            <p class="text-xl text-center text-gray-600 mb-16" data-i18n="twitter.subtitle">关注一个人的商学院，掌握创业领域最新趋势</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- 推文1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Twitter用户" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold">@创业达人</h4>
+                            <p class="text-sm text-gray-500">2小时前</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4" data-i18n="twitter.tweet1">刚完成了@一个人的商学院的创业启动课程，干货满满！特别是关于市场定位的内容，帮我节省了至少3个月的试错时间。强烈推荐给所有想创业的朋友！ #创业 #商学院</p>
+                    <div class="flex text-gray-500 text-sm">
+                        <div class="mr-4"><i class="far fa-heart mr-1"></i> 45</div>
+                        <div class="mr-4"><i class="far fa-comment mr-1"></i> 12</div>
+                        <div><i class="far fa-retweet mr-1"></i> 23</div>
+                    </div>
+                </div>
+                
+                <!-- 推文2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Twitter用户" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold">@健康生活家</h4>
+                            <p class="text-sm text-gray-500">1天前</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4" data-i18n="twitter.tweet2">感谢@一个人的商学院分享的辟谷代餐品牌运营经验，让我的小店在短短两个月内销量翻了三倍！社群里认识的小伙伴们也给了我很多宝贵建议。这绝对是我今年最值的投资！ #辟谷 #创业成功</p>
+                    <div class="flex text-gray-500 text-sm">
+                        <div class="mr-4"><i class="far fa-heart mr-1"></i> 78</div>
+                        <div class="mr-4"><i class="far fa-comment mr-1"></i> 25</div>
+                        <div><i class="far fa-retweet mr-1"></i> 34</div>
+                    </div>
+                </div>
+                
+                <!-- 推文3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Twitter用户" class="w-12 h-12 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-bold">@创投观察</h4>
+                            <p class="text-sm text-gray-500">3天前</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4" data-i18n="twitter.tweet3">刚参加完@一个人的商学院举办的创业者沙龙，现场气氛热烈，干货满满。特别佩服他们通过实际案例进行教学的方式，远比那些纯理论的创业课程有价值得多。期待下次活动！ #创业交流 #实战经验</p>
+                    <div class="flex text-gray-500 text-sm">
+                        <div class="mr-4"><i class="far fa-heart mr-1"></i> 92</div>
+                        <div class="mr-4"><i class="far fa-comment mr-1"></i> 31</div>
+                        <div><i class="far fa-retweet mr-1"></i> 47</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://twitter.com/hashtag/一个人的商学院" target="_blank" class="btn-secondary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg">
+                    <i class="fab fa-twitter mr-2"></i> <span data-i18n="twitter.cta">查看更多评价</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="faq.title">常见问题</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-6">
+                <!-- 问题1 -->
+                <div class="faq-item bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-3" data-i18n="faq.question1">一个人的商学院如何帮我提升创业成功率？</h3>
+                    <p class="text-gray-600" data-i18n="faq.answer1">我们通过分享真实的辟谷代餐品牌创业经验，提供系统化的创业课程，组建强大的创业社群，为您提供全方位的创业指导和支持。根据我们的数据，使用我们服务的创业者成功率比普通创业者高出50%。</p>
+                </div>
+                
+                <!-- 问题2 -->
+                <div class="faq-item bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-3" data-i18n="faq.question2">一个人的商学院有哪些核心服务？</h3>
+                    <p class="text-gray-600" data-i18n="faq.answer2">我们的核心服务包括：1）真实创业案例分享；2）系统化创业课程；3）创业社群支持；4）一对一创业咨询；5）创业资源对接。这些服务共同构成了一个全面的创业支持体系。</p>
+                </div>
+                
+                <!-- 问题3 -->
+                <div class="faq-item bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-3" data-i18n="faq.question3">一个人的商学院是否适合零基础的创业者？</h3>
+                    <p class="text-gray-600" data-i18n="faq.answer3">非常适合！我们的课程和服务特别设计了面向零基础创业者的内容，从创业基础知识开始，循序渐进地指导您完成从0到1的创业过程。许多我们最成功的会员最初就是零经验的创业者。</p>
+                </div>
+                
+                <!-- 问题4 -->
+                <div class="faq-item bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-3" data-i18n="faq.question4">一个人的商学院的定价如何？</h3>
+                    <p class="text-gray-600" data-i18n="faq.answer4">我们提供了基础版（199元/月）、专业版（499元/月）和企业版（999元/月）三种不同的套餐，满足不同阶段和需求的创业者。您可以根据自己的具体情况选择最适合的套餐。</p>
+                </div>
+                
+                <!-- 问题5 -->
+                <div class="faq-item bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-bold mb-3" data-i18n="faq.question5">如何加入一个人的商学院？</h3>
+                    <p class="text-gray-600" data-i18n="faq.answer5">您可以通过我们网站上的"加入等待列表"表单提交您的信息，我们会在第一时间与您联系，邀请您参与我们的内测计划。或者，您也可以直接选择适合的套餐立即订阅我们的服务。</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-600 mb-4" data-i18n="faq.moreQuestions">还有其他问题？</p>
+                <a href="#contact" class="btn-secondary px-8 py-3 rounded-lg text-lg font-medium inline-block shadow-lg" data-i18n="faq.contactUs">联系我们</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-16" data-i18n="contact.title">联系我们</h2>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <form class="space-y-6">
+                            <div>
+                                <label for="contact-name" class="block text-gray-700 mb-2" data-i18n="contact.form.name">姓名</label>
+                                <input type="text" id="contact-name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" data-i18n-placeholder="contact.form.namePlaceholder" placeholder="请输入您的姓名">
+                            </div>
+                            <div>
+                                <label for="contact-email" class="block text-gray-700 mb-2" data-i18n="contact.form.email">电子邮箱 <span class="text-red-500">*</span></label>
+                                <input type="email" id="contact-email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" data-i18n-placeholder="contact.form.emailPlaceholder" placeholder="请输入您的电子邮箱">
+                            </div>
+                            <div>
+                                <label for="contact-subject" class="block text-gray-700 mb-2" data-i18n="contact.form.subject">主题</label>
+                                <select id="contact-subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                    <option value="" data-i18n="contact.form.subjectOption0">请选择联系主题</option>
+                                    <option value="course" data-i18n="contact.form.subjectOption1">课程咨询</option>
+                                    <option value="membership" data-i18n="contact.form.subjectOption2">会员咨询</option>
+                                    <option value="cooperation" data-i18n="contact.form.subjectOption3">商务合作</option>
+                                    <option value="feedback" data-i18n="contact.form.subjectOption4">意见反馈</option>
+                                    <option value="other" data-i18n="contact.form.subjectOption5">其他</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="contact-message" class="block text-gray-700 mb-2" data-i18n="contact.form.message">留言内容 <span class="text-red-500">*</span></label>
+                                <textarea id="contact-message" required rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent" data-i18n-placeholder="contact.form.messagePlaceholder" placeholder="请输入您的留言内容"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn-primary w-full py-3 rounded-lg text-lg font-medium">
+                                    <i class="fas fa-paper-plane mr-2"></i> <span data-i18n="contact.form.submit">发送留言</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-white rounded-xl shadow-lg p-8 h-full">
+                        <h3 class="text-2xl font-bold mb-6" data-i18n="contact.info.title">联系方式</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- 电话 -->
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-orange-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1" data-i18n="contact.info.phone">电话咨询</h4>
+                                    <p class="text-gray-600">400-123-4567</p>
+                                    <p class="text-sm text-gray-500" data-i18n="contact.info.businessHours">工作时间：周一至周五 9:00-18:00</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 邮箱 -->
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1" data-i18n="contact.info.email">电子邮箱</h4>
+                                    <p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a7975746e7b796e5a75747f6a7f686975747b797b7e7f776334797577">[email&#160;protected]</a></p>
+                                    <p class="text-sm text-gray-500" data-i18n="contact.info.emailResponse">我们会在24小时内回复您的邮件</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 地址 -->
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1" data-i18n="contact.info.address">办公地址</h4>
+                                    <p class="text-gray-600" data-i18n="contact.info.addressDetail">北京市朝阳区建国路88号SOHO现代城1号楼20层</p>
+                                    <p class="text-sm text-gray-500" data-i18n="contact.info.addressNote">欢迎预约拜访</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 社交媒体 -->
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-share-alt text-purple-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-3" data-i18n="contact.info.social">社交媒体</h4>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-200 transition-all">
+                                            <i class="fab fa-weixin"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-200 transition-all">
+                                            <i class="fab fa-weibo"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-200 transition-all">
+                                            <i class="fab fa-qq"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-200 transition-all">
+                                            <i class="fab fa-tiktok"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-700 hover:bg-gray-200 transition-all">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 地图 -->
+                        <div class="mt-8 rounded-lg overflow-hidden shadow-md h-64">
+                            <iframe src="https://maps.google.com/maps?q=北京市朝阳区建国路88号&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- 公司信息 -->
+                <div>
+                    <div class="flex items-center mb-6">
+                        <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" class="mr-3">
+                            <defs>
+                                <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FFA500" />
+                                    <stop offset="100%" stop-color="#FF8C00" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="30" cy="30" r="28" fill="white" stroke="url(#footerLogoGradient)" stroke-width="4"/>
+                            <path d="M25 20 L25 40 M35 20 L35 40" stroke="url(#footerLogoGradient)" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M20 25 L40 25 M20 35 L40 35" stroke="url(#footerLogoGradient)" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="30" cy="30" r="8" fill="url(#footerLogoGradient)"/>
+                            <path d="M18 16 L42 16 L42 44 L18 44 Z" stroke="url(#footerLogoGradient)" stroke-width="2" fill="none" rx="2" ry="2"/>
+                        </svg>
+                        <span class="text-xl font-bold" data-i18n="footer.companyName">一个人的商学院</span>
+                    </div>
+                    <p class="text-gray-400 mb-6" data-i18n="footer.slogan">通过<span class="text-orange-400 font-bold">辟谷代餐品牌创业实践</span>，分享真实创业经验，助力个人创业</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-weixin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-weibo text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-qq text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 快捷链接 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6" data-i18n="footer.quickLinks">快捷链接</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#hero" class="text-gray-400 hover:text-white transition-colors" data-i18n="footer.home">首页</a></li>
+                        <li><a href="#brand" class="text-gray-400 hover:text-white transition-colors" data-i18n="footer.brand">品牌</a></li>
+                        <li><a href="#startup-plan" class="text-gray-400 hover:text-white transition-colors" data-i18n="footer.startupPlan">创业计划</a></li>
+                        <li><a href="#products" class="text-gray-400 hover:text-white transition-colors" data-i18n="footer.products">产品</a></li>
+                        <li><a href="#community" class="text-gray-400 hover:text-white transition-colors" data-i18n="footer.community">社群</a></li>
+                        <li><a href="#business-academy" class="text-gray-400 hover:text-white transition-colors" data-i18n="footer.businessAcademy">商学院</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 联系方式 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6" data-i18n="footer.contactInfo">联系方式</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-gray-500"></i>
+                            <span class="text-gray-400">400-123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-500"></i>
+                            <span class="text-gray-400"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7c1f1312081d1f083c1312190c190e0f13121d1f1d18191105521f1311">[email&#160;protected]</a></span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mr-3 mt-1 text-gray-500"></i>
+                            <span class="text-gray-400" data-i18n="footer.address">北京市朝阳区建国路88号SOHO现代城1号楼20层</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- 订阅 -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6" data-i18n="footer.subscribe">订阅最新资讯</h3>
+                    <p class="text-gray-400 mb-4" data-i18n="footer.subscribeDesc">第一时间获取创业干货和活动通知</p>
+                    <form class="flex">
+                        <input type="email" class="flex-1 px-4 py-2 rounded-l-lg focus:outline-none text-gray-800" data-i18n-placeholder="footer.emailPlaceholder" placeholder="您的电子邮箱">
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-r-lg transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-8">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0" data-i18n="footer.copyright"> 2023 一个人的商学院. 保留所有权利.</p>
+                
+                <div class="flex flex-wrap justify-center space-x-4">
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors" data-i18n="footer.privacyPolicy">隐私政策</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors" data-i18n="footer.termsOfService">服务条款</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors" data-i18n="footer.disclaimer">免责声明</a>
+                    
+                    <!-- 语言切换下拉菜单 -->
+                    <div class="relative inline-block text-left">
+                        <button id="language-switcher" class="flex items-center text-gray-500 hover:text-white text-sm transition-colors">
+                            <i class="fas fa-globe mr-1"></i>
+                            <span id="current-language" data-i18n="footer.language">简体中文</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div id="language-dropdown" class="hidden absolute right-0 bottom-full mb-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div class="py-1">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-language="zh">简体中文</a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-language="en">English</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-orange-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 transition-opacity duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // 移动端菜单
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.style.opacity = '1';
+            } else {
+                backToTopButton.style.opacity = '0';
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 语言切换功能
+        const languageSwitcher = document.getElementById('language-switcher');
+        const languageDropdown = document.getElementById('language-dropdown');
+        
+        languageSwitcher.addEventListener('click', function(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('hidden');
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (languageSwitcher !== e.target && !languageSwitcher.contains(e.target)) {
+                languageDropdown.classList.add('hidden');
+            }
+        });
+        
+        // 语言切换功能实现
+        const languageLinks = document.querySelectorAll('[data-language]');
+        let currentLanguage = localStorage.getItem('language') || 'zh';
+        const currentLanguageElement = document.getElementById('current-language');
+        
+        // 初始加载语言
+        loadLanguage(currentLanguage);
+        
+        // 更新当前显示的语言
+        function updateCurrentLanguageDisplay() {
+            if (currentLanguage === 'zh') {
+                currentLanguageElement.textContent = '简体中文';
+            } else if (currentLanguage === 'en') {
+                currentLanguageElement.textContent = 'English';
+            }
+        }
+        
+        updateCurrentLanguageDisplay();
+        
+        // 语言切换事件监听
+        languageLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const lang = this.getAttribute('data-language');
+                currentLanguage = lang;
+                localStorage.setItem('language', lang);
+                loadLanguage(lang);
+                updateCurrentLanguageDisplay();
+                languageDropdown.classList.add('hidden');
+            });
+        });
+        
+        // 加载语言文件并应用
+        function loadLanguage(lang) {
+            fetch(`${lang}.json`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Language file not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    applyTranslations(data);
+                })
+                .catch(error => {
+                    console.error('Error loading language file:', error);
+                });
+        }
+        
+        // 应用翻译
+        function applyTranslations(translations) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                const translation = getNestedTranslation(translations, key);
+                
+                if (translation) {
+                    element.textContent = translation;
+                }
+            });
+            
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                const translation = getNestedTranslation(translations, key);
+                
+                if (translation) {
+                    element.placeholder = translation;
+                }
+            });
+        }
+        
+        // 获取嵌套的翻译内容
+        function getNestedTranslation(translations, key) {
+            const keys = key.split('.');
+            let result = translations;
+            
+            for (const k of keys) {
+                if (result && result[k] !== undefined) {
+                    result = result[k];
+                } else {
+                    return null;
+                }
+            }
+            
+            return result;
+        }
+    </script>
+
+    <!-- 多语言支持 -->
+    <script src="js/i18n.js"></script>
+</body>
+</html>

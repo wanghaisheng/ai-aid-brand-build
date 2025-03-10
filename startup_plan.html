@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title data-i18n="app.startupPlan.title">一个人的商学院 - 创业计划</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFA500;
+            --secondary-color: #007bff;
+            --background-color: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F5F5F5;
+            color: var(--text-color);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 模拟 iOS 状态栏 */
+        .ios-status-bar {
+            background-color: #000;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            padding: 0 15px;
+        }
+        
+        /* 模拟 iOS Tab Bar */
+        .ios-tab-bar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #E5E5E5;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 83px;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+            padding-bottom: 30px;
+        }
+        
+        /* 内容区域 */
+        .app-content {
+            margin-top: 40px;
+            margin-bottom: 83px;
+            border-radius: 0;
+            overflow-y: auto;
+            height: calc(100vh - 123px);
+        }
+        
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8E8E93;
+            font-size: 10px;
+            padding-top: 8px;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-item i {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .plan-tag {
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+        
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        
+        .progress-circle .bg {
+            stroke: #F0F0F0;
+        }
+        
+        .progress-circle .progress {
+            stroke: var(--primary-color);
+            stroke-dasharray: 189.5;
+            stroke-dashoffset: calc(189.5 - (189.5 * var(--progress)) / 100);
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .progress-circle .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* 设备外壳样式 */
+        .device-frame {
+            background-color: #000;
+            border-radius: 22px;
+            padding: 0;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            max-width: 375px;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="device-frame">
+        <!-- iOS 状态栏 -->
+        <div class="ios-status-bar flex justify-between items-center">
+            <div class="text-white text-xs">9:41</div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-signal text-white text-xs"></i>
+                <i class="fas fa-wifi text-white text-xs"></i>
+                <i class="fas fa-battery-full text-white text-xs"></i>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="app-content bg-gray-50">
+            <!-- 顶部导航 -->
+            <div class="bg-white px-5 py-4 sticky top-0 z-10">
+                <div class="flex items-center">
+                    <button class="mr-4">
+                        <i class="fas fa-arrow-left text-lg"></i>
+                    </button>
+                    <h1 class="text-xl font-bold" data-i18n="app.startupPlan.title">创业计划</h1>
+                </div>
+            </div>
+            
+            <!-- 创业计划概览 -->
+            <div class="p-5">
+                <div class="card bg-white p-5 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold" data-i18n="app.startupPlan.overview.title">创业计划概览</h2>
+                        <span class="plan-tag bg-green-100 text-green-600" data-i18n="app.startupPlan.overview.status">进行中</span>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-5" data-i18n="app.startupPlan.overview.description">辟谷代餐品牌创业计划是一个基于健康食品市场的创业项目，旨在开发和推广高品质的辟谷代餐产品，满足现代人对健康、便捷饮食的需求。</p>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="text-gray-500 text-xs mb-1" data-i18n="app.startupPlan.overview.startDate">开始日期</div>
+                            <div class="font-medium">2025-03-15</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-xs mb-1" data-i18n="app.startupPlan.overview.phaseCount">阶段数</div>
+                            <div class="font-medium">5</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-xs mb-1" data-i18n="app.startupPlan.overview.completedPhases">已完成</div>
+                            <div class="font-medium">3</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="text-sm font-medium" data-i18n="app.startupPlan.overview.progress">总体进度</div>
+                            <div class="text-sm text-orange-500 font-medium">68%</div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-orange-500 h-2 rounded-full" style="width: 68%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-orange-50 p-4 rounded-lg flex items-center">
+                        <i class="fas fa-lightbulb text-orange-500 text-xl mr-4"></i>
+                        <p class="text-sm text-gray-700" data-i18n="app.startupPlan.overview.tip">通过查看创业计划的各个阶段，了解辟谷代餐品牌的完整创业历程，借鉴实战经验！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 创业计划阶段 -->
+            <div class="px-5 pb-4">
+                <h2 class="text-lg font-bold mb-4" data-i18n="app.startupPlan.phases.title">创业计划阶段</h2>
+                
+                <!-- 阶段1 -->
+                <div class="card bg-white p-5 mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="plan-tag bg-green-100 text-green-600 mr-2" data-i18n="app.startupPlan.phases.completed">已完成</span>
+                                <h3 class="font-bold" data-i18n="app.startupPlan.phases.phase1.title">阶段一：市场调研与分析</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2025-03-15 ~ 2025-05-15</p>
+                        </div>
+                        <div class="progress-circle" style="--progress: 100">
+                            <svg width="60" height="60">
+                                <circle class="bg" cx="30" cy="30" r="28"></circle>
+                                <circle class="progress" cx="30" cy="30" r="28"></circle>
+                            </svg>
+                            <div class="text">100%</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.startupPlan.phases.phase1.description">通过深入的市场调研和竞品分析，了解辟谷代餐市场的现状、竞争格局和消费者需求，为产品定位和开发奠定基础。</p>
+                    
+                    <div class="mb-4">
+                        <div class="text-sm font-medium mb-2" data-i18n="app.startupPlan.phases.phase1.keyFindings">关键发现</div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">
+                                    <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                                    <span data-i18n="app.startupPlan.phases.phase1.finding1">健康代餐市场年增长率达15%</span>
+                                </p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">
+                                    <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                                    <span data-i18n="app.startupPlan.phases.phase1.finding2">女性用户占比达70%</span>
+                                </p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">
+                                    <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                                    <span data-i18n="app.startupPlan.phases.phase1.finding3">天然成分是最关注因素</span>
+                                </p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="text-xs text-gray-600">
+                                    <i class="fas fa-check-circle text-green-500 mr-1"></i>
+                                    <span data-i18n="app.startupPlan.phases.phase1.finding4">口味多样化需求明显</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                        <span data-i18n="app.startupPlan.phases.viewDetails">查看详情</span>
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 阶段2 -->
+                <div class="card bg-white p-5 mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="plan-tag bg-green-100 text-green-600 mr-2" data-i18n="app.startupPlan.phases.completed">已完成</span>
+                                <h3 class="font-bold" data-i18n="app.startupPlan.phases.phase2.title">阶段二：产品研发与测试</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2025-05-16 ~ 2025-08-30</p>
+                        </div>
+                        <div class="progress-circle" style="--progress: 100">
+                            <svg width="60" height="60">
+                                <circle class="bg" cx="30" cy="30" r="28"></circle>
+                                <circle class="progress" cx="30" cy="30" r="28"></circle>
+                            </svg>
+                            <div class="text">100%</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.startupPlan.phases.phase2.description">基于市场调研结果，开发辟谷代餐产品配方，并进行多轮用户测试，不断优化产品品质和口感，确保产品满足目标用户需求。</p>
+                    
+                    <div class="mb-4">
+                        <div class="text-sm font-medium mb-2" data-i18n="app.startupPlan.phases.phase2.keyMilestones">关键里程碑</div>
+                        <div class="bg-gray-50 p-3 rounded-lg mb-2">
+                            <p class="text-xs text-gray-600">
+                                <i class="fas fa-flask text-orange-500 mr-2"></i>
+                                <span data-i18n="app.startupPlan.phases.phase2.milestone1">完成3种基础配方研发</span>
+                            </p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg mb-2">
+                            <p class="text-xs text-gray-600">
+                                <i class="fas fa-users text-orange-500 mr-2"></i>
+                                <span data-i18n="app.startupPlan.phases.phase2.milestone2">招募100名测试用户</span>
+                            </p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-600">
+                                <i class="fas fa-thumbs-up text-orange-500 mr-2"></i>
+                                <span data-i18n="app.startupPlan.phases.phase2.milestone3">产品满意度达到85%</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                        <span data-i18n="app.startupPlan.phases.viewDetails">查看详情</span>
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 阶段3 -->
+                <div class="card bg-white p-5 mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="plan-tag bg-green-100 text-green-600 mr-2" data-i18n="app.startupPlan.phases.completed">已完成</span>
+                                <h3 class="font-bold" data-i18n="app.startupPlan.phases.phase3.title">阶段三：品牌定位与包装设计</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2025-09-01 ~ 2025-11-15</p>
+                        </div>
+                        <div class="progress-circle" style="--progress: 100">
+                            <svg width="60" height="60">
+                                <circle class="bg" cx="30" cy="30" r="28"></circle>
+                                <circle class="progress" cx="30" cy="30" r="28"></circle>
+                            </svg>
+                            <div class="text">100%</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.startupPlan.phases.phase3.description">确定品牌定位和核心价值主张，设计产品包装和品牌视觉识别系统，打造有吸引力的品牌形象，提升产品竞争力。</p>
+                    
+                    <div class="mb-4">
+                        <div class="text-sm font-medium mb-2" data-i18n="app.startupPlan.phases.phase3.keyResults">关键成果</div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <img src="https://via.placeholder.com/160x100" alt="品牌标志" class="rounded-lg">
+                            <img src="https://via.placeholder.com/160x100" alt="包装设计" class="rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                        <span data-i18n="app.startupPlan.phases.viewDetails">查看详情</span>
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 阶段4 -->
+                <div class="card bg-white p-5 mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="plan-tag bg-orange-100 text-orange-600 mr-2" data-i18n="app.startupPlan.phases.inProgress">进行中</span>
+                                <h3 class="font-bold" data-i18n="app.startupPlan.phases.phase4.title">阶段四：生产与上市</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2025-11-16 ~ 2026-02-28</p>
+                        </div>
+                        <div class="progress-circle" style="--progress: 70">
+                            <svg width="60" height="60">
+                                <circle class="bg" cx="30" cy="30" r="28"></circle>
+                                <circle class="progress" cx="30" cy="30" r="28"></circle>
+                            </svg>
+                            <div class="text">70%</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.startupPlan.phases.phase4.description">通过多种营销渠道推广产品，扩大品牌影响力，拓展销售渠道，建立客户忠诚度，推动品牌持续成长。</p>
+                    
+                    <div class="mb-4">
+                        <div class="text-sm font-medium mb-2" data-i18n="app.startupPlan.phases.phase4.currentTasks">当前任务</div>
+                        <div class="bg-gray-50 p-3 rounded-lg mb-2">
+                            <div class="flex justify-between items-center">
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.phases.phase4.task1">完成首批5000份产品生产</p>
+                                <span class="text-green-500 text-xs">✓</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg mb-2">
+                            <div class="flex justify-between items-center">
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.phases.phase4.task2">上线电商平台店铺</p>
+                                <span class="text-green-500 text-xs">✓</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.phases.phase4.task3">完成首批KOL合作</p>
+                                <span class="text-orange-500 text-xs" data-i18n="app.startupPlan.phases.inProcess">进行中</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                        <span data-i18n="app.startupPlan.phases.viewDetails">查看详情</span>
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+                
+                <!-- 阶段5 -->
+                <div class="card bg-white p-5 mb-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center">
+                                <span class="plan-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.startupPlan.phases.upcoming">即将开始</span>
+                                <h3 class="font-bold" data-i18n="app.startupPlan.phases.phase5.title">阶段五：市场拓展与品牌成长</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2026-03-01 ~ 2026-12-31</p>
+                        </div>
+                        <div class="progress-circle" style="--progress: 0">
+                            <svg width="60" height="60">
+                                <circle class="bg" cx="30" cy="30" r="28"></circle>
+                                <circle class="progress" cx="30" cy="30" r="28"></circle>
+                            </svg>
+                            <div class="text">0%</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.startupPlan.phases.phase5.description">通过多种营销渠道推广产品，扩大品牌影响力，拓展销售渠道，建立客户忠诚度，推动品牌持续成长。</p>
+                    
+                    <div class="mb-4">
+                        <div class="text-sm font-medium mb-2" data-i18n="app.startupPlan.phases.phase5.plannedActivities">计划活动</div>
+                        <div class="bg-gray-50 p-3 rounded-lg mb-2">
+                            <p class="text-xs text-gray-600" data-i18n="app.startupPlan.phases.phase5.activity1">线上社群营销活动</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg mb-2">
+                            <p class="text-xs text-gray-600" data-i18n="app.startupPlan.phases.phase5.activity2">参加健康食品展会</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-xs text-gray-600" data-i18n="app.startupPlan.phases.phase5.activity3">开发新口味产品线</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="text-orange-500 text-sm font-medium flex items-center">
+                        <span data-i18n="app.startupPlan.phases.viewDetails">查看详情</span>
+                        <i class="fas fa-chevron-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 经验总结 -->
+            <div class="px-5 py-4 mb-20">
+                <h2 class="text-lg font-bold mb-4" data-i18n="app.startupPlan.lessons.title">创业经验总结</h2>
+                
+                <div class="card bg-white p-5">
+                    <p class="text-sm text-gray-600 mb-5" data-i18n="app.startupPlan.lessons.description">在辟谷代餐品牌的创业过程中，我们积累了丰富的经验和教训，希望能对其他创业者有所启发。</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex">
+                            <div class="bg-orange-100 text-orange-500 p-2 rounded-lg mr-3 h-10 w-10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm mb-1" data-i18n="app.startupPlan.lessons.lesson1.title">产品研发需要耐心与坚持</h4>
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.lessons.lesson1.content">我们在产品研发阶段经历了7次配方调整，最终才找到平衡营养与口感的最佳方案。初创企业要有耐心，不要急于求成。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="bg-blue-100 text-blue-500 p-2 rounded-lg mr-3 h-10 w-10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm mb-1" data-i18n="app.startupPlan.lessons.lesson2.title">小规模测试，快速迭代</h4>
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.lessons.lesson2.content">我们采用小规模测试的方式，每次只生产少量样品给测试用户，根据反馈快速迭代，这种方式极大减少了资源浪费。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="bg-green-100 text-green-500 p-2 rounded-lg mr-3 h-10 w-10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm mb-1" data-i18n="app.startupPlan.lessons.lesson3.title">社群营销的强大力量</h4>
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.lessons.lesson3.content">我们通过打造垂直领域的社群，建立了稳定的用户基础和口碑传播渠道，这比纯粹的广告投放效果好得多。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="bg-red-100 text-red-500 p-2 rounded-lg mr-3 h-10 w-10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm mb-1" data-i18n="app.startupPlan.lessons.lesson4.title">避免的错误：供应链管理不善</h4>
+                                <p class="text-xs text-gray-600" data-i18n="app.startupPlan.lessons.lesson4.content">在生产阶段，我们遇到了供应链延误的问题，导致产品上市时间推迟。建议创业者提前建立多个备选供应商渠道。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <a href="#" class="bg-orange-500 text-white py-2 px-6 rounded-full text-sm font-medium" data-i18n="app.startupPlan.lessons.learnMore">了解更多创业经验</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Tab Bar -->
+        <div class="ios-tab-bar">
+            <div class="flex justify-around h-full">
+                <a href="home.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="app.tabs.home">首页</span>
+                </a>
+                <a href="startup_plan.html" class="tab-item active">
+                    <i class="fas fa-rocket"></i>
+                    <span data-i18n="app.tabs.plan">计划</span>
+                </a>
+                <a href="milestone_tracker.html" class="tab-item">
+                    <i class="fas fa-tasks"></i>
+                    <span data-i18n="app.tabs.milestones">里程碑</span>
+                </a>
+                <a href="resources.html" class="tab-item">
+                    <i class="fas fa-book"></i>
+                    <span data-i18n="app.tabs.resources">资源</span>
+                </a>
+                    <!-- <i class="fas fa-shopping-bag"></i> -->
+                    <!-- <span data-i18n="app.tabs.products">产品</span> -->
+                <!-- </a> -->
+                <!-- <a href="resources.html" class="tab-item"> -->
+                    <!-- <i class="fas fa-cubes"></i> -->
+                    <!-- <span data-i18n="app.tabs.resources">资源</span> -->
+                <!-- </a> -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 加载语言文件并应用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取当前语言设置，默认为中文
+            const currentLanguage = localStorage.getItem('language') || 'zh';
+            
+            // 加载对应的语言文件
+            fetch(`${currentLanguage}.json`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Language file not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    applyTranslations(data);
+                })
+                .catch(error => {
+                    console.error('Error loading language file:', error);
+                });
+            
+            // 应用翻译
+            function applyTranslations(translations) {
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    const translation = getNestedTranslation(translations, key);
+                    
+                    if (translation) {
+                        element.textContent = translation;
+                    }
+                });
+                
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-i18n-placeholder');
+                    const translation = getNestedTranslation(translations, key);
+                    
+                    if (translation) {
+                        element.placeholder = translation;
+                    }
+                });
+            }
+            
+            // 获取嵌套的翻译内容
+            function getNestedTranslation(translations, key) {
+                const keys = key.split('.');
+                let result = translations;
+                
+                for (const k of keys) {
+                    if (result && result[k] !== undefined) {
+                        result = result[k];
+                    } else {
+                        return null;
+                    }
+                }
+                
+                return result;
+            }
+        });
+    </script>
+
+
+    <!-- 多语言支持 -->
+    <script src="js/i18n.js"></script>
+</body>
+</html>

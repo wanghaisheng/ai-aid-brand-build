@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title data-i18n="app.resources.title">一个人的商学院 - 创业资源</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFA500;
+            --secondary-color: #007bff;
+            --background-color: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F5F5F5;
+            color: var(--text-color);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 模拟 iOS 状态栏 */
+        .ios-status-bar {
+            background-color: #000;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            padding: 0 15px;
+        }
+        
+        /* 模拟 iOS Tab Bar */
+        .ios-tab-bar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #E5E5E5;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 83px;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+            padding-bottom: 30px;
+        }
+        
+        /* 内容区域 */
+        .app-content {
+            margin-top: 40px;
+            margin-bottom: 83px;
+            border-radius: 0;
+            overflow-y: auto;
+            height: calc(100vh - 123px);
+        }
+        
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8E8E93;
+            font-size: 10px;
+            padding-top: 8px;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-item i {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .resource-category {
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .resource-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 2px;
+        }
+        
+        .category-market::before {
+            background-color: #FF6B6B;
+        }
+        
+        .category-product::before {
+            background-color: #4ECDC4;
+        }
+        
+        .category-brand::before {
+            background-color: #FFD166;
+        }
+        
+        .category-sales::before {
+            background-color: #6A0572;
+        }
+        
+        .category-community::before {
+            background-color: #1A936F;
+        }
+        
+        .category-learning::before {
+            background-color: #3D5A80;
+        }
+        
+        .category-network::before {
+            background-color: #E76F51;
+        }
+        
+        .category-ai::before {
+            background-color: #7209B7;
+        }
+        
+        .resource-item {
+            transition: all 0.3s ease;
+        }
+        
+        .resource-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 设备外壳样式 */
+        .device-frame {
+            background-color: #000;
+            border-radius: 22px;
+            padding: 0;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            max-width: 375px;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* AI 标记样式 */
+        .ai-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: rgba(114, 9, 183, 0.1);
+            color: #7209B7;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="device-frame">
+        <!-- iOS 状态栏 -->
+        <div class="ios-status-bar flex justify-between items-center">
+            <div class="text-white text-xs">9:41</div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-signal text-white text-xs"></i>
+                <i class="fas fa-wifi text-white text-xs"></i>
+                <i class="fas fa-battery-full text-white text-xs"></i>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="app-content bg-gray-50">
+            <!-- 顶部导航 -->
+            <div class="bg-white px-5 py-4 sticky top-0 z-10">
+                <div class="flex items-center">
+                    <button class="mr-4">
+                        <i class="fas fa-arrow-left text-lg"></i>
+                    </button>
+                    <h1 class="text-xl font-bold" data-i18n="app.resources.title">创业资源</h1>
+                </div>
+            </div>
+            
+            <!-- 资源介绍 -->
+            <div class="p-5">
+                <div class="card bg-white p-5 mb-6">
+                    <h2 class="text-lg font-bold mb-3" data-i18n="app.resources.intro.title">辟谷代餐品牌实践沉淀的创业资源</h2>
+                    
+                    <p class="text-sm text-gray-600 mb-4" data-i18n="app.resources.intro.description">
+                        在辟谷代餐品牌的创业实践过程中，我们积累了大量宝贵的经验和资源，这些资源涵盖了创业的各个环节，从市场调研、产品开发到品牌建设、销售运营等。"一个人的商学院"结合先进的AI辅助工具，为您提供全方位的创业支持。
+                    </p>
+                    
+                    <div class="flex items-center bg-orange-50 p-4 rounded-lg">
+                        <div class="bg-orange-100 text-orange-500 p-2 rounded-lg mr-3 h-10 w-10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <p class="text-sm text-gray-700" data-i18n="app.resources.intro.tip">这些资源都来自真实的创业实践，结合了最新的AI辅助工具，帮助您在创业道路上事半功倍！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 资源分类 -->
+            <div class="px-5 pb-4">
+                <h3 class="text-lg font-bold mb-4" data-i18n="app.resources.categories.title">资源分类</h3>
+                
+                <!-- 市场调研资源 -->
+                <div class="mb-6">
+                    <div class="resource-category category-market mb-4">
+                        <h4 class="font-bold text-base mb-2" data-i18n="app.resources.categories.market">市场调研资源</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="resource-item card bg-white p-4 relative">
+                            <div class="ai-badge" data-i18n="app.resources.ai">AI 辅助</div>
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.market.item1">市场分析报告</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.market.item1.desc">包含辟谷代餐市场趋势、规模、增长率等数据。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">4.8 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.market.item2">用户调研数据</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.market.item2.desc">用户需求、偏好、消费习惯等信息。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">2.3 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4 relative">
+                            <div class="ai-badge" data-i18n="app.resources.ai">AI 辅助</div>
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.market.item3">AI数据分析工具指南</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.market.item3.desc">使用AI工具进行市场趋势预测和用户画像分析的详细指南。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">1.5 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 产品开发资源 -->
+                <div class="mb-6">
+                    <div class="resource-category category-product mb-4">
+                        <h4 class="font-bold text-base mb-2" data-i18n="app.resources.categories.product">产品开发资源</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.product.item1">配方研发记录</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.product.item1.desc">不同配方的试验数据、用户反馈等。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">3.7 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.product.item2">样品制作资料</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.product.item2.desc">样品的制作流程、成本核算等。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">5.2 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4 relative">
+                            <div class="ai-badge" data-i18n="app.resources.ai">AI 辅助</div>
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.product.item3">AI辅助设计工具指南</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.product.item3.desc">利用AI设计工具进行产品包装和配方优化的方法。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">2.1 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 品牌建设资源 -->
+                <div class="mb-6">
+                    <div class="resource-category category-brand mb-4">
+                        <h4 class="font-bold text-base mb-2" data-i18n="app.resources.categories.brand">品牌建设资源</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.brand.item1">品牌故事</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.brand.item1.desc">品牌创立背景、发展过程、核心价值观等。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">1.8 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.brand.item2">视觉设计资源</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.brand.item2.desc">品牌标志、包装设计、宣传物料等。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">8.5 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4 relative">
+                            <div class="ai-badge" data-i18n="app.resources.ai">AI 辅助</div>
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.brand.item3">AI设计工具使用案例</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.brand.item3.desc">使用AI设计工具生成品牌标志和包装设计的成功案例。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">4.3 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 销售运营资源 -->
+                <div class="mb-6">
+                    <div class="resource-category category-sales mb-4">
+                        <h4 class="font-bold text-base mb-2" data-i18n="app.resources.categories.sales">销售运营资源</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.sales.item1">销售渠道资料</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.sales.item1.desc">电商平台、线下门店等销售平台的相关信息。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">3.2 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4 relative">
+                            <div class="ai-badge" data-i18n="app.resources.ai">AI 辅助</div>
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.sales.item2">AI聊天机器人应用指南</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.sales.item2.desc">利用AI聊天机器人进行客户咨询解答和销售预测的详细指南。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">2.7 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item card bg-white p-4">
+                            <h5 class="font-medium mb-2" data-i18n="app.resources.sales.item3">营销活动记录</h5>
+                            <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.sales.item3.desc">促销活动的策划、执行和效果评估。</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">4.6 MB</span>
+                                <button class="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-download mr-1"></i> <span data-i18n="app.resources.download">下载</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 其他资源 -->
+                <div class="text-center mt-6 mb-4">
+                    <button class="bg-gray-800 text-white rounded-lg py-3 px-6 w-full">
+                        <i class="fas fa-plus mr-2"></i> <span data-i18n="app.resources.showMore">查看更多资源</span>
+                    </button>
+                </div>
+                
+                <!-- AI辅助资源 -->
+                <div class="mb-20">
+                    <div class="resource-category category-ai mb-4">
+                        <h4 class="font-bold text-base mb-2" data-i18n="app.resources.categories.ai">AI辅助资源</h4>
+                    </div>
+                    
+                    <div class="card bg-white p-5">
+                        <p class="text-sm text-gray-600 mb-4" data-i18n="app.resources.ai.intro">
+                            在创业过程中，我们充分利用了各种AI工具提升效率和质量。以下是我们常用的AI辅助工具集合，希望对您的创业之旅有所帮助。
+                        </p>
+                        
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="resource-item bg-purple-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2" data-i18n="app.resources.ai.item1">AI编程工具</h5>
+                                <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.ai.item1.desc">如GitHub Copilot、CodeGeeX等，帮助开发者高效完成代码生成、代码评审等任务。</p>
+                                <button class="bg-purple-600 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-external-link-alt mr-1"></i> <span data-i18n="app.resources.explore">探索工具</span>
+                                </button>
+                            </div>
+                            
+                            <div class="resource-item bg-purple-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2" data-i18n="app.resources.ai.item2">AI chatbot资源</h5>
+                                <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.ai.item2.desc">如ChatGPT、文心一言等，用于智能对话、内容生成等。</p>
+                                <button class="bg-purple-600 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-external-link-alt mr-1"></i> <span data-i18n="app.resources.explore">探索工具</span>
+                                </button>
+                            </div>
+                            
+                            <div class="resource-item bg-purple-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2" data-i18n="app.resources.ai.item3">AI设计工具</h5>
+                                <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.ai.item3.desc">用于产品包装设计、品牌标志生成、营销物料制作等。</p>
+                                <button class="bg-purple-600 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-external-link-alt mr-1"></i> <span data-i18n="app.resources.explore">探索工具</span>
+                                </button>
+                            </div>
+                            
+                            <div class="resource-item bg-purple-50 p-4 rounded-lg">
+                                <h5 class="font-medium mb-2" data-i18n="app.resources.ai.item4">AI数据分析工具</h5>
+                                <p class="text-xs text-gray-600 mb-2" data-i18n="app.resources.ai.item4.desc">用于市场趋势预测、用户行为分析、销售预测等。</p>
+                                <button class="bg-purple-600 text-white text-xs py-1 px-3 rounded-full">
+                                    <i class="fas fa-external-link-alt mr-1"></i> <span data-i18n="app.resources.explore">探索工具</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 text-center">
+                            <button class="bg-purple-600 text-white py-2 px-6 rounded-full text-sm">
+                                <i class="fas fa-robot mr-2"></i> <span data-i18n="app.resources.aiTutorial">查看AI工具应用教程</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Tab Bar -->
+        <div class="ios-tab-bar">
+            <div class="flex justify-around h-full">
+                <a href="home.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="app.tabs.home">首页</span>
+                </a>
+                <a href="startup_plan.html" class="tab-item">
+                    <i class="fas fa-rocket"></i>
+                    <span data-i18n="app.tabs.plan">计划</span>
+                </a>
+                <a href="milestone_tracker.html" class="tab-item">
+                    <i class="fas fa-tasks"></i>
+                    <span data-i18n="app.tabs.milestones">里程碑</span>
+                </a>
+                <a href="resources.html" class="tab-item active">
+                    <i class="fas fa-book"></i>
+                    <span data-i18n="app.tabs.resources">资源</span>
+                </a>
+                <!-- <a href="profile.html" class="tab-item"> -->
+                    <!-- <i class="fas fa-user"></i> -->
+                    <!-- <span data-i18n="app.tabs.profile">我的</span> -->
+                <!-- </a> -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 加载语言文件并应用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取当前语言设置，默认为中文
+            const currentLanguage = localStorage.getItem('language') || 'zh';
+            
+            // 加载对应的语言文件
+            fetch(`${currentLanguage}.json`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Language file not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    applyTranslations(data);
+                })
+                .catch(error => {
+                    console.error('Error loading language file:', error);
+                });
+            
+            // 应用翻译
+            function applyTranslations(translations) {
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    const translation = getNestedTranslation(translations, key);
+                    
+                    if (translation) {
+                        element.textContent = translation;
+                    }
+                });
+                
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-i18n-placeholder');
+                    const translation = getNestedTranslation(translations, key);
+                    
+                    if (translation) {
+                        element.placeholder = translation;
+                    }
+                });
+            }
+            
+            // 获取嵌套的翻译内容
+            function getNestedTranslation(translations, key) {
+                const keys = key.split('.');
+                let result = translations;
+                
+                for (const k of keys) {
+                    if (result && result[k] !== undefined) {
+                        result = result[k];
+                    } else {
+                        return null;
+                    }
+                }
+                
+                return result;
+            }
+        });
+    </script>
+
+
+    <!-- 多语言支持 -->
+    <script src="js/i18n.js"></script>
+</body>
+</html>

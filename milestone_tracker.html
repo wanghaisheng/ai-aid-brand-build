@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title data-i18n="app.milestoneTracker.title">一个人的商学院 - 里程碑追踪</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FFA500;
+            --secondary-color: #007bff;
+            --background-color: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #F5F5F5;
+            color: var(--text-color);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 模拟 iOS 状态栏 */
+        .ios-status-bar {
+            background-color: #000;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            padding: 0 15px;
+        }
+        
+        /* 模拟 iOS Tab Bar */
+        .ios-tab-bar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #E5E5E5;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 83px;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
+            padding-bottom: 30px;
+        }
+        
+        /* 内容区域 */
+        .app-content {
+            margin-top: 40px;
+            margin-bottom: 83px;
+            border-radius: 0;
+            overflow-y: auto;
+            height: calc(100vh - 123px);
+        }
+        
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8E8E93;
+            font-size: 10px;
+            padding-top: 8px;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-item i {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .milestone-tag {
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid white;
+            z-index: 10;
+        }
+        
+        .timeline-dot.completed {
+            background-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .timeline-dot.in-progress {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.2);
+        }
+        
+        .timeline-dot.pending {
+            background-color: #9CA3AF;
+            box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.2);
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 8px;
+            width: 2px;
+            background-color: #E5E5E5;
+            z-index: 1;
+        }
+        
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+        
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        
+        .progress-circle .bg {
+            stroke: #F0F0F0;
+        }
+        
+        .progress-circle .progress {
+            stroke: var(--primary-color);
+            stroke-dasharray: 189.5;
+            stroke-dashoffset: calc(189.5 - (189.5 * var(--progress)) / 100);
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .progress-circle .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* 设备外壳样式 */
+        .device-frame {
+            background-color: #000;
+            border-radius: 22px;
+            padding: 0;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            max-width: 375px;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .milestone-detail-modal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .milestone-detail-modal.show {
+            transform: translateY(0);
+        }
+        
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-backdrop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .output-item {
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .output-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="device-frame">
+        <!-- iOS 状态栏 -->
+        <div class="ios-status-bar flex justify-between items-center">
+            <div class="text-white text-xs">9:41</div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-signal text-white text-xs"></i>
+                <i class="fas fa-wifi text-white text-xs"></i>
+                <i class="fas fa-battery-full text-white text-xs"></i>
+            </div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="app-content bg-gray-50">
+            <!-- 顶部导航 -->
+            <div class="bg-white px-5 py-4 sticky top-0 z-10">
+                <div class="flex items-center">
+                    <button class="mr-4" onclick="window.location.href='startup_plan.html'">
+                        <i class="fas fa-arrow-left text-lg"></i>
+                    </button>
+                    <h1 class="text-xl font-bold" data-i18n="app.milestoneTracker.title">里程碑追踪</h1>
+                </div>
+            </div>
+            
+            <!-- 里程碑总览 -->
+            <div class="p-5">
+                <div class="card bg-white p-5 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold" data-i18n="app.milestoneTracker.overview.title">里程碑总览</h2>
+                        <div class="flex items-center">
+                            <button id="sortToggleBtn" class="flex items-center bg-orange-100 text-orange-600 py-1 px-3 rounded-lg mr-2">
+                                <i class="fas fa-sort mr-1"></i>
+                                <span id="sortText" data-i18n="app.milestoneTracker.sort.chronological">时间顺序</span>
+                            </button>
+                            <span class="milestone-tag bg-green-100 text-green-600" data-i18n="app.milestoneTracker.overview.status">进行中</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <div class="text-gray-500 text-xs mb-1" data-i18n="app.milestoneTracker.overview.totalMilestones">总里程碑</div>
+                            <div class="font-medium">16</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-xs mb-1" data-i18n="app.milestoneTracker.overview.completed">已完成</div>
+                            <div class="font-medium">8</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 text-xs mb-1" data-i18n="app.milestoneTracker.overview.inProgress">进行中</div>
+                            <div class="font-medium">2</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="text-sm font-medium" data-i18n="app.milestoneTracker.overview.progress">总体进度</div>
+                            <div class="text-sm text-orange-500 font-medium">50%</div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-orange-500 h-2 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-orange-50 p-4 rounded-lg flex items-center">
+                        <i class="fas fa-lightbulb text-orange-500 text-xl mr-4"></i>
+                        <p class="text-sm text-gray-700" data-i18n="app.milestoneTracker.overview.tip">点击任意里程碑查看详情，了解每个里程碑的核心工作和关键输出物！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 里程碑列表 -->
+            <div class="px-5 pb-20">
+                <h2 class="text-lg font-bold mb-4" data-i18n="app.milestoneTracker.phases.title">里程碑列表</h2>
+                
+                <!-- 准备阶段 -->
+                <div class="mb-6">
+                    <h3 class="text-md font-bold mb-3 flex items-center">
+                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                        <span data-i18n="app.milestoneTracker.phases.preparation">一、准备阶段 (奠定基石)</span>
+                    </h3>
+                    
+                    <div class="relative pl-6">
+                        <div class="timeline-line"></div>
+                        
+                        <!-- 里程碑1 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(1)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2025-03-20</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone1.title">里程碑 1: 完成市场调研与用户洞察</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑2 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(2)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2025-04-10</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone2.title">里程碑 2: 明确品牌定位与核心价值</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑3 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(3)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2025-05-05</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone3.title">里程碑 3: 完成初步的产品概念设计与配方方向</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑4 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(4)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2025-05-25</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone4.title">里程碑 4: 完成商业模式设计与盈利模式规划</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 产品阶段 -->
+                <div class="mb-6">
+                    <h3 class="text-md font-bold mb-3 flex items-center">
+                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                        <span data-i18n="app.milestoneTracker.phases.product">二、产品阶段 (打造核心产品)</span>
+                    </h3>
+                    
+                    <div class="relative pl-6">
+                        <div class="timeline-line"></div>
+                        
+                        <!-- 里程碑5 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(5)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2025-07-10</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone5.title">里程碑 5: 完成产品配方研发与优化</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑6 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(6)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2020-08-15</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone6.title">里程碑 6: 确定生产方案与供应链</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑7 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(7)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2020-09-20</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone7.title">里程碑 7: 完成产品包装设计与生产</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑8 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(8)">
+                            <div class="timeline-dot completed absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-green-100 text-green-600 mr-2" data-i18n="app.milestoneTracker.status.completed">已完成</span>
+                                                <span class="text-xs text-gray-500">2020-10-30</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone8.title">里程碑 8: 获得必要的资质认证与合规许可</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 品牌与营销阶段 -->
+                <div class="mb-6">
+                    <h3 class="text-md font-bold mb-3 flex items-center">
+                        <span class="inline-block w-3 h-3 bg-orange-500 rounded-full mr-2"></span>
+                        <span data-i18n="app.milestoneTracker.phases.branding">三、品牌与营销阶段 (建立品牌影响力)</span>
+                    </h3>
+                    
+                    <div class="relative pl-6">
+                        <div class="timeline-line"></div>
+                        
+                        <!-- 里程碑9 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(9)">
+                            <div class="timeline-dot in-progress absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-orange-100 text-orange-600 mr-2" data-i18n="app.milestoneTracker.status.inProgress">进行中</span>
+                                                <span class="text-xs text-gray-500">2020-11-15</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone9.title">里程碑 9: 完成品牌视觉体系 (VI) 设计与品牌故事完善</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑10 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(10)">
+                            <div class="timeline-dot in-progress absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-orange-100 text-orange-600 mr-2" data-i18n="app.milestoneTracker.status.inProgress">进行中</span>
+                                                <span class="text-xs text-gray-500">2020-12-01</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone10.title">里程碑 10: 搭建线上销售渠道</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑11 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(11)">
+                            <div class="timeline-dot pending absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.milestoneTracker.status.pending">待开始</span>
+                                                <span class="text-xs text-gray-500">计划中</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone11.title">里程碑 11: 制定整合营销传播策略</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑12 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(12)">
+                            <div class="timeline-dot pending absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.milestoneTracker.status.pending">待开始</span>
+                                                <span class="text-xs text-gray-500">计划中</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone12.title">里程碑 12: 建立初步的社群运营体系</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 启动与增长阶段 -->
+                <div class="mb-6">
+                    <h3 class="text-md font-bold mb-3 flex items-center">
+                        <span class="inline-block w-3 h-3 bg-gray-500 rounded-full mr-2"></span>
+                        <span data-i18n="app.milestoneTracker.phases.growth">四、启动与增长阶段 (市场验证与持续优化)</span>
+                    </h3>
+                    
+                    <div class="relative pl-6">
+                        <div class="timeline-line"></div>
+                        
+                        <!-- 里程碑13 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(13)">
+                            <div class="timeline-dot pending absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.milestoneTracker.status.pending">待开始</span>
+                                                <span class="text-xs text-gray-500">计划中</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone13.title">里程碑 13: 产品正式上市销售</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑14 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(14)">
+                            <div class="timeline-dot pending absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.milestoneTracker.status.pending">待开始</span>
+                                                <span class="text-xs text-gray-500">计划中</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone14.title">里程碑 14: 获得首批用户反馈与优化产品/服务</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑15 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(15)">
+                            <div class="timeline-dot pending absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.milestoneTracker.status.pending">待开始</span>
+                                                <span class="text-xs text-gray-500">计划中</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone15.title">里程碑 15: 验证商业模式与实现初步盈利</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 里程碑16 -->
+                        <div class="mb-4 relative" onclick="showMilestoneDetail(16)">
+                            <div class="timeline-dot pending absolute left-0 top-0 mt-1"></div>
+                            <div class="ml-6">
+                                <div class="card bg-white p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <div class="flex items-center mb-1">
+                                                <span class="milestone-tag bg-gray-100 text-gray-600 mr-2" data-i18n="app.milestoneTracker.status.pending">待开始</span>
+                                                <span class="text-xs text-gray-500">计划中</span>
+                                            </div>
+                                            <h4 class="font-medium" data-i18n="app.milestoneTracker.milestone16.title">里程碑 16: 建立可持续的用户增长体系</h4>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- iOS Tab Bar -->
+        <div class="ios-tab-bar">
+            <div class="flex justify-around h-full">
+                <a href="home.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="app.tabs.home">首页</span>
+                </a>
+                <!-- <a href="products.html" class="tab-item"> -->
+                    <!-- <i class="fas fa-box"></i> -->
+                    <!-- <span data-i18n="app.tabs.products">产品</span> -->
+                <!-- </a> -->
+                <a href="startup_plan.html" class="tab-item">
+                    <i class="fas fa-rocket"></i>
+                    <span data-i18n="app.tabs.plan">计划</span>
+                </a>
+                <a href="milestone_tracker.html" class="tab-item active">
+                    <i class="fas fa-tasks"></i>
+                    <span data-i18n="app.tabs.milestones">里程碑</span>
+                </a>
+                <a href="resources.html" class="tab-item">
+                    <i class="fas fa-book"></i>
+                    <span data-i18n="app.tabs.resources">资源</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 里程碑详情模态框 -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="hideMilestoneDetail()"></div>
+    <div class="milestone-detail-modal" id="milestoneDetailModal">
+        <div class="p-5">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold" id="modalTitle">里程碑详情</h3>
+                <button onclick="hideMilestoneDetail()">
+                    <i class="fas fa-times text-gray-400 text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4">
+                <div class="flex items-center mb-2">
+                    <span class="milestone-tag bg-green-100 text-green-600 mr-2" id="modalStatus">已完成</span>
+                    <span class="text-sm text-gray-500" id="modalDate">2020-03-20</span>
+                </div>
+                <h4 class="text-lg font-medium mb-4" id="modalMilestoneTitle">里程碑 1: 完成市场调研与用户洞察</h4>
+            </div>
+            
+            <div class="mb-4">
+                <h5 class="font-medium mb-2" data-i18n="app.milestoneTracker.detail.coreWork">核心工作</h5>
+                <p class="text-sm text-gray-600 mb-4" id="modalCoreWork">深入了解辟谷代餐市场现状、竞争格局、用户需求痛点（健康、体重管理、生活方式等）、价格敏感度、消费习惯等。</p>
+            </div>
+            
+            <div class="mb-4">
+                <h5 class="font-medium mb-2" data-i18n="app.milestoneTracker.detail.significance">里程碑意义</h5>
+                <p class="text-sm text-gray-600 mb-4" id="modalSignificance">确认市场机会，避免盲目入场。精准定位目标用户，为后续产品开发、品牌定位、营销策略提供方向。</p>
+            </div>
+            
+            <div class="mb-4">
+                <h5 class="font-medium mb-2" data-i18n="app.milestoneTracker.detail.keyOutputs">关键输出物</h5>
+                <div class="bg-gray-50 p-4 rounded-lg" id="modalOutputs">
+                    <div class="output-item mb-3">
+                        <p class="text-sm">详细的市场调研报告: 包含市场规模、增长趋势、竞争格局分析、行业政策分析等。</p>
+                    </div>
+                    <div class="output-item mb-3">
+                        <p class="text-sm">用户画像文档: 至少3-5个典型用户画像，包含年龄、性别、地域、收入、生活方式、健康需求、痛点、购买习惯等。</p>
+                    </div>
+                    <div class="output-item">
+                        <p class="text-sm">竞争对手分析报告: 详细分析至少3-5个主要竞争对手的产品、定价、渠道、营销策略、优劣势等。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 资源下载区域 -->
+            <div class="mb-4">
+                <h5 class="font-medium mb-2" data-i18n="app.milestoneTracker.detail.resources">相关资源</h5>
+                <div class="bg-white border border-gray-200 rounded-lg">
+                    <!-- 提示词模板下载 -->
+                    <div class="p-3 border-b border-gray-200">
+                        <h6 class="text-sm font-medium mb-2" data-i18n="app.milestoneTracker.detail.promptTemplates">提示词模板</h6>
+                        <div id="promptTemplatesList" class="space-y-2">
+                            <!-- 提示词模板列表将通过JS动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 输出物文件下载 -->
+                    <div class="p-3">
+                        <h6 class="text-sm font-medium mb-2" data-i18n="app.milestoneTracker.detail.outputTemplates">输出物模板</h6>
+                        <div id="outputTemplatesList" class="space-y-2">
+                            <!-- 输出物模板列表将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="w-full bg-orange-500 text-white py-3 rounded-lg font-medium" data-i18n="app.milestoneTracker.detail.viewDetails">查看详细资料</button>
+        </div>
+    </div>
+    
+    <script src="js/i18n.js"></script>
+    <script src="js/milestone_resources.js"></script>
+    <script>
+        // 初始化多语言支持
+        document.addEventListener('DOMContentLoaded', function() {
+            I18N.init();
+            renderMilestones();
+        });
+        
+        // 排序状态
+        let isChronological = true; // true为时间顺序（从早到晚），false为倒序（从晚到早）
+        
+        // 里程碑数据
+        const milestoneData = [
+            {
+                id: 1,
+                title: "里程碑 1: 完成市场调研与用户洞察",
+                status: "completed",
+                statusText: "已完成",
+                date: "2025-03-20",
+                coreWork: "深入了解辟谷代餐市场现状、竞争格局、用户需求痛点（健康、体重管理、生活方式等）、价格敏感度、消费习惯等。",
+                significance: "确认市场机会，避免盲目入场。精准定位目标用户，为后续产品开发、品牌定位、营销策略提供方向。",
+                outputs: [
+                    "详细的市场调研报告: 包含市场规模、增长趋势、竞争格局分析、行业政策分析等。",
+                    "用户画像文档: 至少3-5个典型用户画像，包含年龄、性别、地域、收入、生活方式、健康需求、痛点、购买习惯等。",
+                    "竞争对手分析报告: 详细分析至少3-5个主要竞争对手的产品、定价、渠道、营销策略、优劣势等。"
+                ],
+                phase: "preparation"
+            },
+            {
+                id: 2,
+                title: "里程碑 2: 明确品牌定位与核心价值",
+                status: "completed",
+                statusText: "已完成",
+                date: "2025-04-10",
+                coreWork: "确定品牌的核心理念、目标受众、差异化优势（例如：成分天然、口味独特、便捷性、专业辟谷指导等）、品牌故事、品牌愿景。",
+                significance: "建立品牌的灵魂，使其在众多代餐品牌中脱颖而出。清晰的定位是后续品牌建设和营销传播的基础。",
+                outputs: [
+                    "品牌定位报告: 明确品牌目标受众、品牌核心定位、差异化竞争优势 (Unique Selling Proposition - USP)、品牌个性、品牌价值观等。",
+                    "核心价值主张 (Value Proposition) 文档: 清晰简洁地表达品牌能为用户提供的核心价值和利益。",
+                    "初步品牌故事草稿: 讲述品牌起源、理念、愿景，初步塑造品牌情感连接。"
+                ],
+                phase: "preparation"
+            },
+            {
+                id: 3,
+                title: "里程碑 3: 完成初步的产品概念设计与配方方向",
+                status: "completed",
+                statusText: "已完成",
+                date: "2025-05-05",
+                coreWork: "基于市场调研和用户洞察，初步确定产品形态（粉剂、代餐棒、即食粥等）、核心成分方向（天然食材、营养配比、特殊功能成分等）、口味偏好、包装形式等。",
+                significance: "初步描绘出产品的轮廓，为后续产品研发和生产打下基础。",
+                outputs: [
+                    "产品概念方案文档: 详细描述产品形态、核心成分、目标功效、口味特点、适用人群、使用场景等。",
+                    "初步配方方向文档: 列出计划使用的主要原料、营养成分配比方向、初步口味方向等，作为研发的起点。",
+                    "包装设计草案 (Mockup): 初步的包装形式、材质、尺寸、视觉风格等草图或模型。"
+                ],
+                phase: "preparation"
+            },
+            {
+                id: 4,
+                title: "里程碑 4: 完成商业模式设计与盈利模式规划",
+                status: "completed",
+                statusText: "已完成",
+                date: "2025-05-25",
+                coreWork: "确定商业模式（例如：线上销售为主、线下渠道拓展、订阅模式等）、盈利模式（产品销售收入、会员服务、增值服务等）、成本结构、初步财务预测。",
+                significance: "确保品牌的可持续性，规划盈利路径，为后续融资或运营决策提供依据。",
+                outputs: [
+                    "商业模式画布 (Business Model Canvas): 清晰展示品牌价值主张、客户细分、渠道通路、客户关系、收入来源、关键活动、关键资源、重要伙伴、成本结构。",
+                    "盈利模式规划书: 详细说明主要的盈利模式（产品销售、会员订阅、增值服务等）、定价策略、成本预算、初步收入预测、盈亏平衡点分析等。"
+                ],
+                phase: "preparation"
+            },
+            {
+                id: 5,
+                title: "里程碑 5: 完成产品配方研发与优化",
+                status: "completed",
+                statusText: "已完成",
+                date: "2020-07-10",
+                coreWork: "根据初步配方方向，进行配方研发、口味测试、营养成分分析、稳定性测试、安全性测试等。不断优化配方，确保口感、营养、安全性和功能性。",
+                significance: "打造出具有竞争力的核心产品，是品牌成功的基石。",
+                outputs: [
+                    "最终产品配方文档: 详细记录所有原料成分、配比、生产工艺流程、质量控制标准等，并经过内部评审和确认。",
+                    "产品检测报告: 由第三方权威机构出具的产品营养成分检测报告、安全性检测报告（重金属、微生物等）、稳定性测试报告等。",
+                    "口味测试报告: 用户口味测试反馈报告，记录用户对不同配方口味的评价和偏好。"
+                ],
+                phase: "product"
+            },
+            {
+                id: 6,
+                title: "里程碑 6: 确定生产方案与供应链",
+                status: "completed",
+                statusText: "已完成",
+                date: "2020-08-15",
+                coreWork: "选择生产模式（自建工厂、OEM代工），寻找可靠的原料供应商、包装供应商、生产合作伙伴，建立稳定的供应链体系，确保产品质量和生产效率。",
+                significance: "保障产品规模化生产和稳定供应，降低生产成本，提升产品竞争力。",
+                outputs: [
+                    "生产合作协议 (OEM代工) 或自建工厂方案: 明确生产模式、生产规模、质量标准、生产责任等。",
+                    "供应商清单: 详细列出原料供应商、包装供应商、生产合作伙伴的名称、联系方式、资质证明、供货能力评估报告等。",
+                    "供应链管理流程文档: 规范原料采购、生产管理、质量控制、仓储物流等环节的流程和标准。"
+                ],
+                phase: "product"
+            },
+            {
+                id: 7,
+                title: "里程碑 7: 完成产品包装设计与生产",
+                status: "completed",
+                statusText: "已完成",
+                date: "2020-09-20",
+                coreWork: "根据品牌定位和产品特点，完成产品包装设计（视觉、材质、功能性），并进行包装生产，确保包装美观、实用、符合品牌调性。",
+                significance: "提升产品形象，吸引消费者目光，保护产品品质。",
+                outputs: [
+                    "最终包装设计方案 (定稿): 包括包装结构图、平面设计稿、3D效果图、材质规格、印刷工艺等，并通过内部评审和确认。",
+                    "包装样品 (打样): 实际生产出来的包装样品，用于确认设计效果、材质质量、生产工艺等。",
+                    "包装生产合同: 与包装生产商签订的生产合同，明确数量、价格、交货期、质量标准等。"
+                ],
+                phase: "product"
+            },
+            {
+                id: 8,
+                title: "里程碑 8: 获得必要的资质认证与合规许可",
+                status: "completed",
+                statusText: "已完成",
+                date: "2020-10-30",
+                coreWork: "根据国家和地区法规，申请必要的食品生产许可证、QS认证、SC认证、有机认证、清真认证等，确保产品合法合规上市销售。",
+                significance: "确保产品合法合规，避免法律风险，建立消费者信任。",
+                outputs: [
+                    "食品生产许可证 (或SC/QS认证证书) 扫描件: 证明生产企业具备合法生产食品的资质。",
+                    "相关产品认证证书扫描件: 例如有机认证、清真认证、HACCP认证等（根据品牌定位和市场需求）。",
+                    "产品合规性文件: 例如产品配方备案证明、产品标签备案证明、产品标准备案证明等（根据国家和地区法规）。"
+                ],
+                phase: "product"
+            },
+            {
+                id: 9,
+                title: "里程碑 9: 完成品牌视觉体系 (VI) 设计与品牌故事完善",
+                status: "in-progress",
+                statusText: "进行中",
+                date: "2020-11-15",
+                coreWork: "设计品牌LOGO、品牌色、字体、品牌形象等视觉元素，完善品牌故事，使其更具吸引力和感染力。",
+                significance: "塑造专业的品牌形象，提升品牌辨识度，传递品牌价值观。",
+                outputs: [
+                    "品牌VI手册 (电子版): 详细规范品牌LOGO、品牌色、辅助色、字体、品牌形象、应用场景等视觉元素的使用规范。",
+                    "最终版品牌故事文档 (多版本): 包括长版品牌故事、短版品牌故事、社交媒体传播版本等，并经过内部评审和确认。"
+                ],
+                phase: "branding"
+            },
+            {
+                id: 10,
+                title: "里程碑 10: 搭建线上销售渠道",
+                status: "in-progress",
+                statusText: "进行中",
+                date: "2020-12-01",
+                coreWork: "搭建官方网站、开设电商平台店铺（淘宝、天猫、京东、微信商城等），建立线上销售体系，包括产品展示、在线支付、订单管理、物流配送等。",
+                significance: "建立直接触达消费者的销售渠道，为产品上市销售做好准备。",
+                outputs: [
+                    "正式上线运营的官方网站 (URL): 包含产品展示、品牌介绍、在线购买功能、用户注册登录、联系方式等。",
+                    "已开设并装修完成的电商平台店铺链接 (URL): 例如淘宝店铺、天猫旗舰店、京东店铺、微信商城等，包含产品上架、店铺装修、支付功能配置等。"
+                ],
+                phase: "branding"
+            },
+            {
+                id: 11,
+                title: "里程碑 11: 制定整合营销传播策略",
+                status: "pending",
+                statusText: "待开始",
+                date: "计划中",
+                coreWork: "制定线上线下整合营销策略，包括内容营销（健康知识、辟谷科普、用户故事）、社交媒体营销（微信、微博、小红书、抖音等）、社群营销、KOL合作、公关活动、广告投放等，明确营销目标、预算和执行计划。",
+                significance: "为品牌推广和产品销售提供清晰的策略指导，提升品牌知名度和美誉度。",
+                outputs: [
+                    "整合营销传播方案文档: 明确营销目标、目标受众、核心信息、营销渠道组合（线上线下）、营销活动计划、预算分配、效果评估指标等。",
+                    "内容营销计划文档: 详细规划内容主题、内容形式（文章、图片、视频、直播等）、内容发布平台、内容发布频率、内容效果追踪等。",
+                    "社交媒体运营计划文档: 明确各社交媒体平台（微信、微博、小红书、抖音等）的运营策略、内容规划、互动活动、粉丝增长目标等。"
+                ],
+                phase: "branding"
+            },
+            {
+                id: 12,
+                title: "里程碑 12: 建立初步的社群运营体系",
+                status: "pending",
+                statusText: "待开始",
+                date: "计划中",
+                coreWork: "搭建用户社群（微信群、QQ群、APP社群等），制定社群运营规则，策划社群活动，开始积累种子用户，进行用户互动和反馈收集。",
+                significance: "建立用户连接，提升用户粘性，为后续用户增长和口碑传播打下基础。",
+                outputs: [
+                    "用户社群 (微信群/QQ群/APP社群) 链接/入口: 至少建立一个核心用户社群。",
+                    "社群运营规则文档: 明确社群定位、社群管理规范、社群活动形式、社群成员权益等。",
+                    "初步社群活动计划: 例如迎新活动、互动话题、福利活动等，用于激活社群氛围。"
+                ],
+                phase: "branding"
+            },
+            {
+                id: 13,
+                title: "里程碑 13: 产品正式上市销售",
+                status: "pending",
+                statusText: "待开始",
+                date: "计划中",
+                coreWork: "按照营销计划，正式启动产品上市销售，进行首批推广活动，监测销售数据和用户反馈。",
+                significance: "产品进入市场验证阶段，开始产生实际销售收入。",
+                outputs: [
+                    "产品上市销售报告: 记录产品上市时间、首批铺货渠道、首批推广活动、媒体报道情况等。",
+                    "首批销售数据报告: 例如首周/首月销售额、订单量、用户数、客单价、转化率等初步销售数据。"
+                ],
+                phase: "growth"
+            },
+            {
+                id: 14,
+                title: "里程碑 14: 获得首批用户反馈与优化产品/服务",
+                status: "pending",
+                statusText: "待开始",
+                date: "计划中",
+                coreWork: "积极收集首批用户的产品体验反馈（口感、效果、包装、服务等），分析用户反馈，快速迭代优化产品配方、包装、服务流程等。",
+                significance: "快速响应市场反馈，持续提升产品和服务质量，增强用户满意度。",
+                outputs: [
+                    "用户反馈报告: 汇总整理首批用户的产品体验反馈，包括正面评价、负面评价、改进建议等，并进行分类和分析。",
+                    "产品/服务优化方案文档: 基于用户反馈，提出具体的产品配方优化方案、包装改进方案、服务流程优化方案等，并制定执行计划。"
+                ],
+                phase: "growth"
+            },
+            {
+                id: 15,
+                title: "里程碑 15: 验证商业模式与实现初步盈利",
+                status: "pending",
+                statusText: "待开始",
+                date: "计划中",
+                coreWork: "持续监测销售数据、用户数据、运营数据，验证商业模式的可行性和盈利能力，调整营销策略和运营策略，力争实现初步盈利。",
+                significance: "证明商业模式的有效性，为后续规模化扩张和融资打下基础。",
+                outputs: [
+                    "商业模式验证报告: 基于初期运营数据，分析商业模式的关键假设是否成立，验证商业模式的可行性和有效性。",
+                    "初步盈利分析报告: 分析收入、成本、利润数据，评估品牌是否实现初步盈利，并分析盈利能力和增长潜力。"
+                ],
+                phase: "growth"
+            },
+            {
+                id: 16,
+                title: "里程碑 16: 建立可持续的用户增长体系",
+                status: "pending",
+                statusText: "待开始",
+                date: "计划中",
+                coreWork: "基于初期运营数据和用户反馈，不断优化营销策略、渠道拓展、用户裂变机制、会员体系等，建立可持续的用户增长体系，实现用户规模的持续扩大。",
+                significance: "为品牌长期发展提供动力，实现用户规模和市场份额的持续增长。",
+                outputs: [
+                    "用户增长体系方案文档: 详细规划用户增长目标、用户增长渠道组合、用户裂变机制、会员体系设计、用户生命周期管理等。",
+                    "用户增长数据报告 (定期更新): 例如每月/每季度用户增长数据、渠道获客成本、用户留存率、用户活跃度等，用于监测用户增长效果和优化增长策略。"
+                ],
+                phase: "growth"
+            }
+        ];
+        
+        // 渲染里程碑列表
+        function renderMilestones() {
+            // 清空现有里程碑列表
+            const preparationPhase = document.querySelector('[data-i18n="app.milestoneTracker.phases.preparation"]').parentNode.nextElementSibling;
+            const productPhase = document.querySelector('[data-i18n="app.milestoneTracker.phases.product"]').parentNode.nextElementSibling;
+            const brandingPhase = document.querySelector('[data-i18n="app.milestoneTracker.phases.branding"]').parentNode.nextElementSibling;
+            const growthPhase = document.querySelector('[data-i18n="app.milestoneTracker.phases.growth"]').parentNode.nextElementSibling;
+            
+            preparationPhase.innerHTML = '<div class="timeline-line"></div>';
+            productPhase.innerHTML = '<div class="timeline-line"></div>';
+            brandingPhase.innerHTML = '<div class="timeline-line"></div>';
+            growthPhase.innerHTML = '<div class="timeline-line"></div>';
+            
+            // 根据排序状态获取排序后的里程碑数据
+            const sortedMilestones = [...milestoneData];
+            if (!isChronological) {
+                sortedMilestones.reverse();
+            }
+            
+            // 渲染各阶段里程碑
+            sortedMilestones.forEach(milestone => {
+                let phaseContainer;
+                switch(milestone.phase) {
+                    case 'preparation':
+                        phaseContainer = preparationPhase;
+                        break;
+                    case 'product':
+                        phaseContainer = productPhase;
+                        break;
+                    case 'branding':
+                        phaseContainer = brandingPhase;
+                        break;
+                    case 'growth':
+                        phaseContainer = growthPhase;
+                        break;
+                }
+                
+                const milestoneHTML = `
+                    <div class="mb-4 relative" onclick="showMilestoneDetail(${milestone.id})">
+                        <div class="timeline-dot ${milestone.status} absolute left-0 top-0 mt-1"></div>
+                        <div class="ml-6">
+                            <div class="card bg-white p-4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="flex items-center mb-1">
+                                            <span class="milestone-tag bg-${milestone.status === 'completed' ? 'green' : milestone.status === 'in-progress' ? 'orange' : 'gray'}-100 text-${milestone.status === 'completed' ? 'green' : milestone.status === 'in-progress' ? 'orange' : 'gray'}-600 mr-2">${milestone.statusText}</span>
+                                            <span class="text-xs text-gray-500">${milestone.date}</span>
+                                        </div>
+                                        <h4 class="font-medium">${milestone.title}</h4>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                phaseContainer.innerHTML += milestoneHTML;
+            });
+            
+            // 更新排序按钮文本
+            document.getElementById('sortText').textContent = isChronological ? '时间顺序' : '时间倒序';
+            document.getElementById('sortText').setAttribute('data-i18n', isChronological ? 'app.milestoneTracker.sort.chronological' : 'app.milestoneTracker.sort.reverse');
+        }
+        
+        // 显示里程碑详情
+        function showMilestoneDetail(id) {
+            // 根据ID获取对应的里程碑数据
+            const milestone = milestoneData.find(m => m.id === id) || milestoneData[0];
+            
+            document.getElementById('modalTitle').textContent = '里程碑详情';
+            document.getElementById('modalStatus').textContent = milestone.statusText;
+            document.getElementById('modalDate').textContent = milestone.date;
+            document.getElementById('modalMilestoneTitle').textContent = milestone.title;
+            document.getElementById('modalCoreWork').textContent = milestone.coreWork;
+            document.getElementById('modalSignificance').textContent = milestone.significance;
+            
+            // 设置输出物
+            const outputsContainer = document.getElementById('modalOutputs');
+            outputsContainer.innerHTML = '';
+            milestone.outputs.forEach(output => {
+                const outputItem = document.createElement('div');
+                outputItem.className = 'output-item mb-3';
+                outputItem.innerHTML = `<p class="text-sm">${output}</p>`;
+                outputsContainer.appendChild(outputItem);
+            });
+            
+            // 根据状态设置样式
+            const statusElement = document.getElementById('modalStatus');
+            if (milestone.status === 'completed') {
+                statusElement.className = 'milestone-tag bg-green-100 text-green-600 mr-2';
+            } else if (milestone.status === 'in-progress') {
+                statusElement.className = 'milestone-tag bg-orange-100 text-orange-600 mr-2';
+            } else {
+                statusElement.className = 'milestone-tag bg-gray-100 text-gray-600 mr-2';
+            }
+            
+            // 加载资源下载列表
+            loadResourceDownloads(id);
+            
+            // 显示模态框
+            document.getElementById('modalBackdrop').classList.add('show');
+            document.getElementById('milestoneDetailModal').classList.add('show');
+        }
+        
+        // 隐藏里程碑详情
+        function hideMilestoneDetail() {
+            document.getElementById('modalBackdrop').classList.remove('show');
+            document.getElementById('milestoneDetailModal').classList.remove('show');
+        }
+        
+        // 排序按钮点击事件
+        document.getElementById('sortToggleBtn').addEventListener('click', function() {
+            isChronological = !isChronological;
+            renderMilestones();
+        });
+        
+        // 加载资源下载列表
+        function loadResourceDownloads(milestoneId) {
+            const resources = getMilestoneResources(milestoneId);
+            if (!resources) return;
+            
+            // 加载提示词模板
+            const promptsList = document.getElementById('promptTemplatesList');
+            promptsList.innerHTML = '';
+            
+            if (resources.prompts && resources.prompts.length > 0) {
+                resources.prompts.forEach((prompt, index) => {
+                    const promptItem = document.createElement('div');
+                    promptItem.className = 'flex items-center justify-between';
+                    promptItem.innerHTML = `
+                        <span class="text-sm text-gray-700">${prompt.name}</span>
+                        <button class="text-xs bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded" 
+                                onclick="downloadPromptTemplate(${milestoneId}, ${index})">
+                            下载
+                        </button>
+                    `;
+                    promptsList.appendChild(promptItem);
+                });
+            } else {
+                promptsList.innerHTML = '<p class="text-sm text-gray-500">暂无提示词模板</p>';
+            }
+            
+            // 加载输出物模板
+            const outputsList = document.getElementById('outputTemplatesList');
+            outputsList.innerHTML = '';
+            
+            if (resources.outputs && resources.outputs.length > 0) {
+                resources.outputs.forEach((output, index) => {
+                    const outputItem = document.createElement('div');
+                    outputItem.className = 'flex items-center justify-between';
+                    outputItem.innerHTML = `
+                        <span class="text-sm text-gray-700">${output.name}</span>
+                        <button class="text-xs bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded" 
+                                onclick="downloadOutputTemplate(${milestoneId}, ${index})">
+                            下载
+                        </button>
+                    `;
+                    outputsList.appendChild(outputItem);
+                });
+            } else {
+                outputsList.innerHTML = '<p class="text-sm text-gray-500">暂无输出物模板</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+{
+  "site": {
+    "title": "One-Person Business School - Fasting Meal Replacement Brand Entrepreneurship Practice",
+    "description": "Share entrepreneurial experience through fasting meal replacement brand practice, empowering individual entrepreneurship"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Core Features",
+    "pricing": "Pricing",
+    "testimonials": "Testimonials",
+    "faq": "FAQ",
+    "contact": "Contact Us",
+    "download": "Download App"
+  },
+  "hero": {
+    "title": "Say Goodbye to Startup Confusion, Welcome Brand Success - Fasting Meal Replacement Helps You Achieve Your Entrepreneurial Goals!",
+    "subtitle": "All-in-one fasting meal replacement brand startup guide, build your successful brand from 0 to 1",
+    "cta": "Try For Free Now",
+    "secondary_cta": "Learn More"
+  },
+  "problem": {
+    "title": "Still struggling with brand positioning in the early stages of entrepreneurship? You're not alone!",
+    "subtitle": "Inefficient brand strategies not only waste time and money but also hinder your entrepreneurial success.",
+    "solution_title": "Fasting Meal Replacement Brand Practice Tailored For You",
+    "solution_desc": "Instantly solve brand dilemmas in the early stages of entrepreneurship, helping you quickly establish a competitive meal replacement brand."
+  },
+  "features": {
+    "title": "Core Features & Use Cases",
+    "subtitle": "All-in-one brand creation tool designed for entrepreneurs",
+    "feature1": {
+      "title": "Scenario 1: Brand Positioning - Precisely Target Your Customers",
+      "desc": "Through data analysis and market insights, we help you precisely position your target customer groups and develop effective brand strategies."
+    },
+    "feature2": {
+      "title": "Scenario 2: Product Design - Create Hit Meal Replacement Products",
+      "desc": "From formula development to packaging design, we provide comprehensive guidance to help you create meal replacement products that meet market demands."
+    },
+    "feature3": {
+      "title": "Scenario 3: Marketing Promotion - Low-Cost Customer Acquisition Strategy",
+      "desc": "Provide practical marketing tools and strategies to help you acquire precise customers at the lowest cost and improve conversion rates."
+    }
+  },
+  "value": {
+    "title": "Fasting Meal Replacement Brand - The Ultimate Tool for Small Entrepreneurs to Improve Success Rate!",
+    "subtitle": "We are committed to helping small entrepreneurs achieve 300% efficiency improvement and 50% higher success rate in the meal replacement industry"
+  },
+  "testimonials": {
+    "title": "The Choice of Over 10,000 Entrepreneurs!",
+    "subtitle": "Hear what they say",
+    "testimonial1": {
+      "name": "Ms. Zhang",
+      "role": "Meal Replacement Brand Founder",
+      "content": "Through the Fasting Meal Replacement Brand Practice Guide, I successfully created my own meal replacement brand in 3 months, with monthly sales exceeding 100,000 yuan!"
+    },
+    "testimonial2": {
+      "name": "Mr. Li",
+      "role": "E-commerce Entrepreneur",
+      "content": "As a zero-experience entrepreneur, this platform gave me a clear roadmap and practical tools, saving me from many detours."
+    },
+    "testimonial3": {
+      "name": "Ms. Wang",
+      "role": "Micro-business Agent",
+      "content": "The product strategy and marketing solutions are very practical, helping me solve the problem of customer acquisition, with a 40% increase in fan conversion rate!"
+    }
+  },
+  "how_it_works": {
+    "title": "Simple to Use, Three Steps to Get Started!",
+    "step1": {
+      "title": "Step 1: Choose a Brand Template",
+      "desc": "Select a suitable starting point from multiple industry-validated brand templates"
+    },
+    "step2": {
+      "title": "Step 2: Customize Your Brand",
+      "desc": "Adjust product positioning, packaging design, and marketing strategies according to the guide"
+    },
+    "step3": {
+      "title": "Step 3: Execute and Optimize",
+      "desc": "Follow the action plan and continuously optimize based on data feedback"
+    }
+  },
+  "app_preview": {
+    "title": "Preview Now - Overview of Fasting Meal Replacement Brand Core Features",
+    "subtitle": "Swipe to browse and discover how Fasting Meal Replacement Brand solves entrepreneurial pain points, making your brand creation twice as efficient"
+  },
+  "pricing": {
+    "title": "Great Value Pricing, Brand Creation Tools at Your Fingertips!",
+    "subtitle": "Multiple flexible packages to meet different needs, there's always one that suits you! Choose the most suitable package now and start your brand enhancement journey!",
+    "plan1": {
+      "name": "Basic",
+      "price": "$15",
+      "period": "/month",
+      "description": "Suitable for individual entrepreneurs starting out",
+      "features": [
+        "Brand Positioning Guide",
+        "Basic Template Library",
+        "Basic Marketing Tools",
+        "Community Support"
+      ],
+      "cta": "Get Started"
+    },
+    "plan2": {
+      "name": "Professional",
+      "price": "$45",
+      "period": "/month",
+      "description": "Suitable for serious small teams",
+      "features": [
+        "All Basic Features",
+        "Advanced Brand Strategy",
+        "Complete Template Library",
+        "1-on-1 Consultation",
+        "Priority Technical Support"
+      ],
+      "cta": "Upgrade to Pro"
+    },
+    "plan3": {
+      "name": "Enterprise",
+      "price": "$149",
+      "period": "/month",
+      "description": "Suitable for growing brand businesses",
+      "features": [
+        "All Professional Features",
+        "Custom Brand Solutions",
+        "Market Analysis Reports",
+        "Dedicated Account Manager",
+        "Brand Growth Planning"
+      ],
+      "cta": "Contact Sales"
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "How does Fasting Meal Replacement Brand help me improve my entrepreneurial success rate?",
+    "a1": "We provide full-process guidance and tools from brand positioning to product design to marketing promotion, based on real success cases, helping you avoid common pitfalls and improve your entrepreneurial success rate.",
+    "q2": "I have no entrepreneurial experience, can I use this platform?",
+    "a2": "Absolutely! Our platform is designed for zero-based entrepreneurs, providing easy-to-understand guides and tools that allow you to get started easily even without experience.",
+    "q3": "How long does it take to see results using the platform?",
+    "a3": "According to user feedback, most entrepreneurs see significant results after using our platform for 1-3 months, including increased brand awareness and sales growth.",
+    "q4": "Are the pricing plans flexible? Can I upgrade or downgrade at any time?",
+    "a4": "Yes, we offer flexible pricing plans, and you can upgrade or downgrade according to your needs at any time, without any restrictions."
+  },
+  "waiting_list": {
+    "title": "Get Early Access, Win at the Starting Line!",
+    "subtitle": "Join the exclusive Fasting Meal Replacement Brand beta waiting list, get beta invitation codes, limited benefits, and exclusive discounts first! Limited spots, join now!",
+    "placeholder": "Please enter your email",
+    "button": "Join Waiting List",
+    "privacy": "We value your privacy and will never disclose your information"
+  },
+  "footer": {
+    "copyright": "© 2023 Fasting Meal Replacement Brand. All rights reserved.",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us",
+    "language": "Language"
+  },
+  "app": {
+    "home": {
+      "title": "One-Person Business School - Home",
+      "welcome": "Welcome to One-Person Business School",
+      "subtitle": "Fasting Meal Replacement Brand Entrepreneurship Practice",
+      "featured": "Featured Content",
+      "recent": "Recent Updates",
+      "categories": {
+        "brand": "Brand Strategy",
+        "product": "Product Development",
+        "marketing": "Marketing Promotion",
+        "operation": "Operation Management"
+      }
+    },
+    "brand": {
+      "title": "One-Person Business School - Brand",
+      "header": "Brand Strategy",
+      "subtitle": "Building a Successful Brand from 0 to 1",
+      "timeline": "Brand Building Timeline",
+      "elements": "Brand Elements",
+      "case_studies": "Success Cases"
+    },
+    "startupPlan": {
+      "title": "One-Person Business School - Startup Plan",
+      "header": "Startup Plan",
+      "subtitle": "Systematic Entrepreneurship Roadmap",
+      "progress": "Completion Progress",
+      "next_steps": "Next Steps",
+      "milestones": "Key Milestones"
+    },
+    "products": {
+      "title": "One-Person Business School - Products",
+      "header": "Product Library",
+      "subtitle": "Fasting Meal Replacement Product Series",
+      "categories": "Product Categories",
+      "bestsellers": "Best Sellers",
+      "new_arrivals": "New Arrivals"
+    },
+    "resources": {
+      "title": "One-Person Business School - Entrepreneurial Resources",
+      "header": "Entrepreneurial Resources",
+      "subtitle": "Practical Tools for Entrepreneurship",
+      "download": "Download",
+      "ai": "AI Assistance",
+      "categories": {
+        "brand": "Brand Resources",
+        "product": "Product Resources",
+        "marketing": "Marketing Resources",
+        "operation": "Operation Resources"
+      }
+    },
+    "milestoneTracker": {
+      "title": "Milestone Tracker",
+      "overview": {
+        "title": "Milestone Overview",
+        "status": "In Progress",
+        "totalMilestones": "Total Milestones",
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "progress": "Overall Progress",
+        "tip": "Click on any milestone to view details, learn about the core work and key outputs of each milestone!"
+      },
+      "phases": {
+        "title": "Milestone List",
+        "preparation": "I. Preparation Phase (Laying the Foundation)",
+        "product": "II. Product Phase (Creating Core Products)",
+        "branding": "III. Brand & Marketing Phase (Building Brand Influence)",
+        "growth": "IV. Launch & Growth Phase (Market Validation & Continuous Optimization)"
+      },
+      "status": {
+        "completed": "Completed",
+        "inProgress": "In Progress",
+        "pending": "Pending"
+      },
+      "detail": {
+        "coreWork": "Core Work",
+        "significance": "Milestone Significance",
+        "keyOutputs": "Key Outputs",
+        "viewDetails": "View Detailed Materials"
+      },
+      "milestone1": {
+        "title": "Milestone 1: Complete Market Research & User Insights"
+      },
+      "milestone2": {
+        "title": "Milestone 2: Define Brand Positioning & Core Value"
+      },
+      "milestone3": {
+        "title": "Milestone 3: Complete Initial Product Concept Design & Formula Direction"
+      },
+      "milestone4": {
+        "title": "Milestone 4: Complete Business Model Design & Revenue Model Planning"
+      },
+      "milestone5": {
+        "title": "Milestone 5: Complete Product Formula Development & Optimization"
+      },
+      "milestone6": {
+        "title": "Milestone 6: Determine Production Plan & Supply Chain"
+      },
+      "milestone7": {
+        "title": "Milestone 7: Complete Product Packaging Design & Production"
+      },
+      "milestone8": {
+        "title": "Milestone 8: Obtain Necessary Certifications & Regulatory Approvals"
+      },
+      "milestone9": {
+        "title": "Milestone 9: Complete Brand Visual Identity (VI) Design & Brand Story Refinement"
+      },
+      "milestone10": {
+        "title": "Milestone 10: Set Up Online Sales Channels"
+      },
+      "milestone11": {
+        "title": "Milestone 11: Develop Integrated Marketing Communication Strategy"
+      },
+      "milestone12": {
+        "title": "Milestone 12: Establish Initial Community Building"
+      },
+      "milestone13": {
+        "title": "Milestone 13: Product Launch & Sales"
+      },
+      "milestone14": {
+        "title": "Milestone 14: Obtain First Customer Feedback & Optimize Product/Service"
+      },
+      "milestone15": {
+        "title": "Milestone 15: Validate Business Model & Achieve Initial Profitability"
+      },
+      "milestone16": {
+        "title": "Milestone 16: Establish Sustainable User Growth System"
+      }
+    },
+    "tabs": {
+      "home": "Home",
+      "products": "Products",
+      "plan": "Plan",
+      "brand": "Brand",
+      "me": "Me"
+    }
+  }
+}
